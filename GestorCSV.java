@@ -10,7 +10,9 @@ public class GestorCSV {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
             for (Usuario usuario : usuarios) {
                 String linea = usuario.getNombre() + DELIMITADOR + usuario.getGasto() + DELIMITADOR 
-                        + usuario.getAhorro() + DELIMITADOR + usuario.getContraseña();
+                        + usuario.getAhorro() + DELIMITADOR + usuario.getContraseña() 
+                        + DELIMITADOR + usuario.getBanco().getNombre() 
+                        + DELIMITADOR + usuario.getBanco().getPagina();
                 writer.write(linea);
                 writer.newLine();
             }
@@ -30,7 +32,8 @@ public class GestorCSV {
                 double gasto = Double.parseDouble(campos[1]);
                 double ahorro = Double.parseDouble(campos[2]);
                 String contraseña = campos[3];
-                Usuario usuario = new Usuario(nombre, gasto, contraseña);
+                Banco banco = new Banco(campos[4], campos[5]);
+                Usuario usuario = new Usuario(nombre, gasto, contraseña, banco);
                 usuario.setAhorro(ahorro);
                 usuarios.add(usuario);
             }
