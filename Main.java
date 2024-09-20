@@ -106,11 +106,25 @@ public class Main {
                                         }
                                     }
                                     break;
-                                    
+
                                 case 3: // Recomendación de ahorro
                                     String recomendacion = recomendacionesAhorro.get(random.nextInt(recomendacionesAhorro.size()));
                                     System.out.println("Recomendaciones de ahorro: " + recomendacion);
                                     break;
+                                    
+                                case 4: // Alertas de límite de gasto
+                                    for (Usuario usuario : usuarios) {
+                                        if (usuario.getNombre().equals(nombre)) {
+                                            if (usuario.getGasto() > 500) {  // Ejemplo de límite
+                                                String alerta = alertasGasto.get(random.nextInt(alertasGasto.size()));
+                                                System.out.println(alerta);
+                                            } else {
+                                                System.out.println("Sus gastos están dentro del límite.");
+                                            }
+                                        }
+                                    }
+                                    break;
+
                                 default:
                                     System.out.println("Opción no válida, intenta de nuevo.");
                             }
