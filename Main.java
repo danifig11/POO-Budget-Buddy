@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class Main {
     public static void main(String[] args){
@@ -9,6 +12,26 @@ public class Main {
         boolean logueado = false;
         String rutaArchivo = "usuarios.csv";
 
+        Random random = new Random();
+
+        // Lista de recomendaciones de ahorro
+        List<String> recomendacionesAhorro = Arrays.asList(
+            "Lleva un registro detallado de tus gastos para identificar áreas en las que puedas recortar.",
+            "Establece un presupuesto mensual y apégate a él para evitar gastos innecesarios.",
+            "Evita las compras impulsivas. Tómate un tiempo para pensar si realmente necesitas lo que estás por comprar.",
+            "Revisa tus suscripciones mensuales y cancela las que no estés utilizando.",
+            "Aprovecha las promociones y descuentos, pero solo si es algo que realmente necesitas.",
+            "Usa efectivo en lugar de tarjetas para tener un mayor control sobre tus gastos diarios."
+        );
+
+        // Lista de alertas cuando se excede el límite de gasto
+        List<String> alertasGasto = Arrays.asList(
+            "¡Atención! Has sobrepasado tu límite de gasto. Considera recortar algunos gastos innecesarios.",
+            "Tu nivel de gasto está por encima del límite establecido. Evita compras adicionales este mes.",
+            "Estás gastando más de lo previsto. Intenta identificar áreas en las que puedas reducir gastos.",
+            "¡Advertencia! Tu gasto está fuera de control. Considera reestructurar tu presupuesto.",
+            "Cuidado, tus gastos están sobre el límite. Considera ahorrar más y gastar menos en el futuro."
+        );
         while (true) { // Menú principal
             try {
                 System.out.println("Ingrese una opción: \n1. Registrarse  \n2. Iniciar sesión \n3. Salir");
@@ -48,8 +71,12 @@ public class Main {
                         while (enMenu) {
                             System.out.println("\n------ Menú Principal ------");
                             System.out.println("1. Registrar ingresos y gastos");
-                            System.out.println("2. Reportes financieros");
-                            System.out.println("3. Salir");
+                            System.out.println("2. Ver datos financieros");
+                            System.out.println("3. Recomendación de ahorro");
+                            System.out.println("4. Alertas de límite de gasto");
+                            System.out.println("5. Sincronización con cuentas bancarias");
+                            System.out.println("6. Exportar y guardar datos");
+                            System.out.println("7. Salir");
                             System.out.println("Elige una opción:");
                             int opcionMenu = Integer.parseInt(md.readLine());
 
