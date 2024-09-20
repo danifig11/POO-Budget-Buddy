@@ -1,17 +1,26 @@
+import java.util.ArrayList;
+
 public class Usuario {
     private String nombre; 
     private double gasto; 
     private double ahorro; 
     private String contraseña; 
     private Banco banco; 
-    private Articulo articulos[];
-    public Usuario(String nombre, double gasto, String contraseña, Banco banco, Articulo[] articulos) {
+    private ArrayList <Articulo> articulos = new ArrayList<>();
+    
+
+    public Usuario(String nombre, double gasto, String contraseña, Banco banco) {
         this.nombre = nombre;
         this.gasto = gasto;
         this.contraseña = contraseña;
         this.banco = banco;
-        this.articulos = articulos;
     }
+    
+    public Usuario(String nombre, String contraseña) {
+        this.nombre = nombre;
+        this.contraseña = contraseña;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -42,11 +51,11 @@ public class Usuario {
     public void setBanco(Banco banco) {
         this.banco = banco;
     }
-    public Articulo[] getArticulos() {
+    public ArrayList<Articulo> getArticulos() {
         return articulos;
     }
-    public void setArticulos(Articulo[] articulos) {
-        this.articulos = articulos;
+    public void setArticulos(Articulo articulo) {
+        this.articulos.add(articulo);
     }
 
 }
