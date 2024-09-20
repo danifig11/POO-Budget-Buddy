@@ -5,6 +5,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+/*UNIVERSIDAD DE VALLE DE GUATEMALA
+ * CAMPUS CENTRAL
+ * PROGRAMACION ORIENTADA A OBJETOS
+ * ESTEBAN EMILIO CUMATZ QUINA, 24449
+ * ADRIAN PENAGOS, 24914
+ * DENIL PARADA, 24761
+ * fIGUERA REYES, 24073
+ * JOEL JOSUE NERIO ALONZO, 24253
+ * PROYECTO PARTE 3
+ */
 public class Main {
     public static void main(String[] args){
         BufferedReader md = new BufferedReader(new InputStreamReader(System.in));
