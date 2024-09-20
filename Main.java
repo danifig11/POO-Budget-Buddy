@@ -130,6 +130,13 @@ public class Main {
                                     System.out.println("Funcionalidad no disponible aún.");
                                 break;
 
+
+                                case 6: // Exportar y guardar datos
+                                    System.out.println("Exportando y guardando sus datos financieros...");
+                                    GestorCSV.guardarUsuarios(usuarios, rutaArchivo);  // Guardar los cambios
+                                    System.out.println("Datos exportados correctamente.");
+                                    break;
+                                    
                                 default:
                                     System.out.println("Opción no válida, intenta de nuevo.");
                             }
