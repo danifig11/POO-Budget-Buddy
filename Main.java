@@ -106,9 +106,10 @@ public class Main {
                                         }
                                     }
                                     break;
-                                case 3:
-                                    System.out.println("Cerrando sesión...");
-                                    enMenu = false;
+                                    
+                                case 3: // Recomendación de ahorro
+                                    String recomendacion = recomendacionesAhorro.get(random.nextInt(recomendacionesAhorro.size()));
+                                    System.out.println("Recomendaciones de ahorro: " + recomendacion);
                                     break;
                                 default:
                                     System.out.println("Opción no válida, intenta de nuevo.");
