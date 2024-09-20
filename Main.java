@@ -88,8 +88,8 @@ public class Main {
                                     double ahorro = Double.parseDouble(md.readLine());
                                     for (Usuario usuario : usuarios) {
                                         if (usuario.getNombre().equals(nombre)) {
-                                            usuario.setGasto(gasto);
-                                            usuario.setAhorro(ahorro);
+                                            usuario.setGasto(usuario.getGasto() + gasto);  // Sumar al gasto actual
+                                            usuario.setAhorro(usuario.getAhorro() + ahorro);  // Sumar al ahorro actual
                                             break;
                                         }
                                     }
@@ -100,8 +100,8 @@ public class Main {
                                     System.out.println("Reportes financieros:");
                                     for (Usuario usuario : usuarios) {
                                         if (usuario.getNombre().equals(nombre)) {
-                                            System.out.println("Gasto: " + usuario.getGasto());
-                                            System.out.println("Ahorro: " + usuario.getAhorro());
+                                            System.out.println("Gasto total: " + usuario.getGasto());
+                                            System.out.println("Ahorro total: " + usuario.getAhorro());
                                         }
                                     }
                                     break;
