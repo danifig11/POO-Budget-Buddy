@@ -96,7 +96,8 @@ public class Main {
                                     GestorCSV.guardarUsuarios(usuarios, rutaArchivo);  // Guardar los cambios
                                     System.out.println("Gastos y ahorros registrados.");
                                     break;
-                                case 2:
+
+                                case 2: // Ver datos financieros
                                     System.out.println("Reportes financieros:");
                                     for (Usuario usuario : usuarios) {
                                         if (usuario.getNombre().equals(nombre)) {
