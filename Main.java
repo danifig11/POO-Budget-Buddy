@@ -124,6 +124,11 @@ public class Main {
                                         }
                                     }
                                     break;
+                                case 5: // Sincronización con cuentas bancarias (funcionalidad futura)
+                                    System.out.println("Sincronizando con cuentas bancarias...");
+                                    // agregar la lógica para sincronizar transacciones bancarias
+                                    System.out.println("Funcionalidad no disponible aún.");
+                                break;
 
                                 default:
                                     System.out.println("Opción no válida, intenta de nuevo.");
