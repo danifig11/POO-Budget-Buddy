@@ -136,6 +136,11 @@ public class Main {
                                     GestorCSV.guardarUsuarios(usuarios, rutaArchivo);  // Guardar los cambios
                                     System.out.println("Datos exportados correctamente.");
                                     break;
+                                
+                                case 7: // Salir y cerrar sesión
+                                    System.out.println("Cerrando sesión...");
+                                    enMenu = false;
+                                    break;
                                     
                                 default:
                                     System.out.println("Opción no válida, intenta de nuevo.");
