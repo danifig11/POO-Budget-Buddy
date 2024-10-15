@@ -10,10 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LogInGUI {
-    private HashMap<String, String> users = new HashMap<>();
 
-    public LoginApp() {
-        cargarUsuarios(); // Carga el archivo CSV con los usuarios y los datos
+    public LogInGUI() {
         crearLoginFrame(); // Crea la interfaz del Login
     }
     
