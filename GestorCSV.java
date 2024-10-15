@@ -33,7 +33,7 @@ public class GestorCSV {
                 double ahorro = Double.parseDouble(campos[2]);
                 String contraseña = campos[3];
                 Banco banco = new Banco(campos[4], campos[5]);
-                Usuario usuario = new Usuario(nombre, gasto, contraseña, banco);
+                Usuario usuario = new Usuario(nombre, gasto, contraseña);
                 usuario.setAhorro(ahorro);
                 usuarios.add(usuario);
             }
