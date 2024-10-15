@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class LogInGUI {
 
@@ -200,8 +199,7 @@ public class LogInGUI {
         createUserButton.addActionListener(e -> {
             String nombre = userText.getText();
             String contra = String.valueOf(passwordText.getPassword());
-            Banco banco = new Banco("xx", "xx");
-            Usuario user = new Usuario(nombre, 0.0, contra, banco);  // Inicialmente con gasto 0
+            Usuario user = new Usuario(nombre, 0.0, contra);  // Inicialmente con gasto 0
             usuarios.add(user);
             GestorCSV.guardarUsuarios(usuarios, rutaArchivo);  // Guardar al archivo CSV
         });

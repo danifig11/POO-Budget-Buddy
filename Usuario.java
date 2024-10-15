@@ -5,15 +5,13 @@ public class Usuario {
     private double gasto; 
     private double ahorro; 
     private String contraseña; 
-    private Banco banco; 
     private ArrayList <Articulo> articulos = new ArrayList<>();
     
 
-    public Usuario(String nombre, double gasto, String contraseña, Banco banco) {
+    public Usuario(String nombre, double gasto, String contraseña) {
         this.nombre = nombre;
         this.gasto = gasto;
         this.contraseña = contraseña;
-        this.banco = banco;
     }
     
     public Usuario(String nombre, String contraseña) {
@@ -45,12 +43,7 @@ public class Usuario {
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
-    public Banco getBanco() {
-        return banco;
-    }
-    public void setBanco(Banco banco) {
-        this.banco = banco;
-    }
+    
     public ArrayList<Articulo> getArticulos() {
         return articulos;
     }
