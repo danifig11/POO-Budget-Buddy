@@ -22,6 +22,49 @@ public class LogInGUI {
     boolean logueado = false;
     String rutaArchivo = "usuarios.csv"; 
 
-    
+    private void crearLoginFrame() {
+        JFrame frame = new JFrame("Login"); // Crear el marco principal
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 200); // Tamaño de la ventana
 
+        // Crear panel para el login
+        JPanel panel = new JPanel(new GridLayout(3, 2)); 
+
+        JLabel userLabel = new JLabel("Usuario: ");
+        JTextField userText = new JTextField();
+        JLabel passwordLabel = new JLabel("Contraseña: ");
+        JPasswordField passwordText = new JPasswordField();
+
+        JButton loginButton = new JButton("Login");
+
+        //componentes del  panel
+        panel.add(userLabel);
+        panel.add(userText);
+        panel.add(passwordLabel);
+        panel.add(passwordText);
+        panel.add(loginButton);
+
+        // botón de login
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombre = userText.getText();
+                String contra = String.valueOf(passwordText.getPassword());
+
+                // Validar usuario y contraseña
+                for (Usuario usuario : usuarios) { // Verificar usuario
+                    if (usuario.getNombre().equals(nombre) && usuario.getContraseña().equals(contra)) {
+                        System.out.println("Inicio de sesión exitoso!");
+                        logueado = true;
+                        break;
+                    }
+                }
+            }
+        });
+        frame.getContentPane().add(panel);
+        frame.setVisible(true); 
+
+        public static void main(String[] args) {
+            new LoginApp(); // Crear la aplicación de login
+        }
 }
