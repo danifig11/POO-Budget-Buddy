@@ -63,8 +63,5 @@ public class LogInGUI {
         });
         frame.getContentPane().add(panel);
         frame.setVisible(true); 
-
-        public static void main(String[] args) {
-            new LoginApp(); // Crear la aplicación de login
-        }
+    }
 }
