@@ -84,7 +84,7 @@ public class Main {
                             System.out.println("2. Ver datos financieros");
                             System.out.println("3. Recomendación de ahorro");
                             System.out.println("4. Alertas de límite de gasto");
-                            System.out.println("5. Sincronización con cuentas bancarias");
+                            System.out.println("5. Cuestionario sobre finanzas");
                             System.out.println("6. Exportar y guardar datos");
                             System.out.println("7. Salir");
                             System.out.println("Elige una opción:");
@@ -134,13 +134,41 @@ public class Main {
                                         }
                                     }
                                     break;
-                                case 5: // Sincronización con cuentas bancarias (funcionalidad futura)
-                                    System.out.println("Sincronizando con cuentas bancarias...");
-                                    // agregar la lógica para sincronizar transacciones bancarias
-                                    System.out.println("Funcionalidad no disponible aún.");
+                                case 5: // Cuestionario sobre finanzas
+                                    System.out.println("Bienvenido al cuestionario para verificar tus conocimientos sobre finanzas");
+                                    CuestionarioFinanzas cuestionario = new CuestionarioFinanzas(); // se crea un objeto cuestionario
+                                    String[][] preguntas = cuestionario.getPreguntas(); //se hace un array 2D para almacenar las preguntas
+                                    int puntaje = 0; //el puntaje empieza siendo 0 de base
+                                    for (int i = 0; i < preguntas.length; i++) { //se inicia un ciclo for 
+                                        System.out.println("\nPregunta " + (i + 1) + ": " + preguntas[i][0]);
+                                        //se imprimen todos las preguntas 
+                                        System.out.println(preguntas[i][1]);
+                                        System.out.println(preguntas[i][2]);
+                                        System.out.println(preguntas[i][3]);
+                            
+                                        // Obtener la respuesta del usuario
+                                        System.out.print("Elige la opción correcta (1-3): ");
+                                        int respuesta = Integer.parseInt(md.readLine());
+                                        // Verificar si la respuesta es correcta
+                                        int respuestaCorrecta = Integer.parseInt(preguntas[i][4]);
+                                        if (cuestionario.verificarRespuesta(respuesta, respuestaCorrecta)) {
+                                            System.out.println("¡Correcto!");
+                                            puntaje++;
+                                        } else {
+                                            System.out.println("Incorrecto.");
+                                        }
+                                    }
+                                    // Mostrar el puntaje final
+                                    System.out.println("\nTu puntaje final es: " + puntaje + "/" + preguntas.length);
+                                    if (puntaje == preguntas.length) {
+                                        System.out.println("¡Excelente! Eres un experto en finanzas.");
+                                    } else if (puntaje >= preguntas.length / 2) {
+                                        System.out.println("¡Bien hecho! Tienes buenos conocimientos en finanzas.");
+                                    } else {
+                                        System.out.println("Sigue aprendiendo sobre finanzas para mejorar tus habilidades.");
+                                    }                                  
                                 break;
-
-
+                                
                                 case 6: // Exportar y guardar datos
                                     System.out.println("Exportando y guardando sus datos financieros...");
                                     GestorCSV.guardarUsuarios(usuarios, rutaArchivo);  // Guardar los cambios
