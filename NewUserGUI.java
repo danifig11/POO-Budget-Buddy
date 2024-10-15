@@ -1,29 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 public class NewUserGUI extends JPanel {
     private JTextField userText;
     private JPasswordField passwordText;
     private JButton createUserButton, backButton;
 
-    BufferedReader md = new BufferedReader(new InputStreamReader(System.in));
-    ArrayList<Usuario> usuarios = GestorCSV.cargarUsuarios("usuarios.csv"); // Cargar usuarios desde CSV
-    boolean logueado = false;
-    String rutaArchivo = "usuarios.csv"; 
-
-    private MainGUI main; // Referencia al main
-
-    public NewUserGUI(MainGUI main) {
-        this.main = main; // Asignar el main
-        NewUserFrame();
-    }
-    
-    public void NewUserFrame() {
+    public NewUserGUI() {
         setLayout(new GridBagLayout());
         setBackground(new Color(60, 63, 65));
         GridBagConstraints gbc = new GridBagConstraints();
@@ -79,26 +63,22 @@ public class NewUserGUI extends JPanel {
         gbc.gridy = 5;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         add(backButton, gbc);
+    }
 
-        createUserButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String nombre = userText.getText();
-                String contra = String.valueOf(passwordText.getPassword());
-                Usuario user = new Usuario(nombre, 0.0, contra);  // Inicialmente con gasto 0
-                usuarios.add(user);
-                GestorCSV.guardarUsuarios(usuarios, rutaArchivo);  // Guardar al archivo CSV
-                JOptionPane.showMessageDialog(NewUserGUI.this, "Usuario creado exitosamente.");
-                main.showLogIn(); // Regresar a la ventana de login
-            }
-        });
+    public String getUsername() {
+        return userText.getText();
+    }
 
-        // Acción del botón de regresar al login
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                main.showLogIn(); // Volver al login
-            }
-        });
+    public String getPassword() {
+        return new String(passwordText.getPassword());
+    }
+
+    public void addCreateUserListener(ActionListener listener) {
+        createUserButton.addActionListener(listener);
+    }
+
+    public void addBackListener(ActionListener listener) {
+        backButton.addActionListener(listener);
     }
 }
+
