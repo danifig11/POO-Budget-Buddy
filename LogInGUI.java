@@ -75,9 +75,22 @@ public class LogInGUI {
         loginButton.setForeground(Color.WHITE); // Color del texto del botón
         loginButton.setFocusPainted(false); // Quitar el borde de selección
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.gridwidth = 2; // Hacer que el botón ocupe 2 columnas
         panel.add(loginButton, gbc);
+
+        // Botón para creación de usuario y contraseña
+        JButton newUserButton = new JButton("¿No tiene usuario y contraseña?");
+        newUserButton.setBackground(new Color(75, 110, 175)); // Color de fondo del botón
+        newUserButton.setForeground(Color.WHITE); // Color del texto del botón
+        newUserButton.setFocusPainted(false); // Quitar el borde de selección
+        newUserButton.setOpaque(false);
+        newUserButton.setContentAreaFilled(false);
+        newUserButton.setBorderPainted(false);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2; // Hacer que el botón ocupe 2 columnas
+        panel.add(newUserButton, gbc);
 
         // botón de login
         loginButton.addActionListener(new ActionListener() {
@@ -96,7 +109,106 @@ public class LogInGUI {
                 }
             }
         });
+
+        newUserButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                NewUserPanel(); // Mostrar el panel de nuevo usuario
+            }
+        });
+
+        
+
         frame.getContentPane().add(panel);
         frame.setVisible(true); 
     }
+
+    // Método para mostrar el panel principal después del login
+    private void NewUserPanel() {
+        // Crear JFrame para el registro de nuevo usuario
+        JFrame newUserFrame = new JFrame("Nuevo Usuario");
+        newUserFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        newUserFrame.setSize(400, 300);
+        newUserFrame.setLocationRelativeTo(null); // Centrar la ventana
+    
+        // Crear panel con GridBagLayout
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(60, 63, 65)); // Fondo oscuro
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10); // Añadir márgenes para espaciado
+    
+        // Etiqueta de usuario
+        JLabel userLabel = new JLabel("Ingrese su nombre de Usuario:");
+        userLabel.setForeground(Color.WHITE); // Color del texto
+        userLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST; // Alinear a la izquierda
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Hacer que ocupe todo el ancho
+        panel.add(userLabel, gbc);
+    
+        // Campo de texto para usuario
+        JTextField userText = new JTextField(15);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(userText, gbc);
+    
+        // Etiqueta de contraseña
+        JLabel passwordLabel = new JLabel("Ingrese una contraseña segura:");
+        passwordLabel.setForeground(Color.WHITE);
+        passwordLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(passwordLabel, gbc);
+    
+        // Campo de contraseña
+        JPasswordField passwordText = new JPasswordField(15);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(passwordText, gbc);
+    
+        // Botón de creación de usuario
+        JButton createUserButton = new JButton("Crear Usuario");
+        createUserButton.setBackground(new Color(75, 110, 175));
+        createUserButton.setForeground(Color.WHITE);
+        createUserButton.setFocusPainted(false); // Quitar borde de enfoque
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(createUserButton, gbc);
+    
+        // Botón para regresar al login
+        JButton backButton = new JButton("Regresar al Login");
+        backButton.setBackground(new Color(75, 110, 175));
+        backButton.setForeground(Color.WHITE);
+        backButton.setFocusPainted(false);
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(backButton, gbc);
+    
+        // Acción del botón de regresar al login
+        backButton.addActionListener(e -> {
+            newUserFrame.dispose(); // Cerrar la ventana actual
+            crearLoginFrame(); // Regresar a la ventana de login
+        });
+
+        // Acción del botón de registrar el usuario
+        createUserButton.addActionListener(e -> {
+            String nombre = userText.getText();
+            String contra = String.valueOf(passwordText.getPassword());
+            Banco banco = new Banco("xx", "xx");
+            Usuario user = new Usuario(nombre, 0.0, contra, banco);  // Inicialmente con gasto 0
+            usuarios.add(user);
+            GestorCSV.guardarUsuarios(usuarios, rutaArchivo);  // Guardar al archivo CSV
+        });
+    
+        // Añadir el panel al marco y hacerlo visible
+        newUserFrame.getContentPane().add(panel);
+        newUserFrame.setVisible(true);
+    }
+    
 }
