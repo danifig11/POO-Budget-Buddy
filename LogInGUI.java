@@ -20,10 +20,11 @@ public class LogInGUI extends JPanel{
 
     public LogInGUI(MainGUI main) {
         this.main = main;
-        LogInFrame();
+        LogInPane();
+
     }
     
-    private void LogInFrame() {
+    private void LogInPane() {
 
         // Crear panel para el login con GridBagLayout para un diseño flexible
         JPanel panel = new JPanel(new GridBagLayout());
@@ -50,7 +51,7 @@ public class LogInGUI extends JPanel{
         panel.add(userLabel, gbc);
 
         // Campo de texto para usuario
-        JTextField userText = new JTextField(15);
+        userText = new JTextField(15);
         gbc.gridx = 1;
         gbc.gridy = 1;
         panel.add(userText, gbc);
@@ -63,13 +64,13 @@ public class LogInGUI extends JPanel{
         panel.add(passwordLabel, gbc);
 
         // Campo de contraseña
-        JPasswordField passwordText = new JPasswordField(15);
+        passwordText = new JPasswordField(15);
         gbc.gridx = 1;
         gbc.gridy = 2;
         panel.add(passwordText, gbc);
 
         // Botón de login
-        JButton loginButton = new JButton("Login");
+        loginButton = new JButton("Login");
         loginButton.setBackground(new Color(75, 110, 175)); // Color de fondo del botón
         loginButton.setForeground(Color.WHITE); // Color del texto del botón
         loginButton.setFocusPainted(false); // Quitar el borde de selección
@@ -79,7 +80,7 @@ public class LogInGUI extends JPanel{
         panel.add(loginButton, gbc);
 
         // Botón para creación de usuario y contraseña
-        JButton newUserButton = new JButton("¿No tiene usuario y contraseña?");
+        newUserButton = new JButton("¿No tiene usuario y contraseña?");
         newUserButton.setBackground(new Color(75, 110, 175)); // Color de fondo del botón
         newUserButton.setForeground(Color.WHITE); // Color del texto del botón
         newUserButton.setFocusPainted(false); // Quitar el borde de selección
@@ -95,17 +96,7 @@ public class LogInGUI extends JPanel{
          loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nombre = userText.getText();
-                String contra = String.valueOf(passwordText.getPassword());
-
-                // Validar usuario y contraseña
-                for (Usuario usuario : usuarios) { // Verificar usuario
-                    if (usuario.getNombre().equals(nombre) && usuario.getContraseña().equals(contra)) {
-                        System.out.println("Inicio de sesión exitoso!");
-                        logueado = true;
-                        break;
-                    }
-                }
+                verify();
             }
         });
 
@@ -116,7 +107,29 @@ public class LogInGUI extends JPanel{
             }
         });
 
+        
+
     }
+
+    private void verify() {
+        String nombre = userText.getText();
+                String contra = String.valueOf(passwordText.getPassword());
+
+                // Validar usuario y contraseña
+                for (Usuario usuario : usuarios) { // Verificar usuario
+                    if (usuario.getNombre().equals(nombre) && usuario.getContraseña().equals(contra)) {
+                        System.out.println("Inicio de sesión exitoso!");
+                        logueado = true;
+                        JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso.");
+                        main.mostrarMenu();
+            
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+    }
+
+
 
 
 }

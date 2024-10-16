@@ -1,7 +1,9 @@
 import javax.swing.*;
 
-public class MainGUI {
 
+
+public class MainGUI {
+    private JTabbedPane pane;
     private JFrame frame;
 
     public static void main(String[] args) {
@@ -24,6 +26,13 @@ public class MainGUI {
         frame.setContentPane(LogIn);
         frame.setVisible(true);
     }
+
+    public void mostrarMenu(){
+        frame.setContentPane(pane);
+        frame.revalidate();
+        frame.repaint();
+    }
+
 
 
 
