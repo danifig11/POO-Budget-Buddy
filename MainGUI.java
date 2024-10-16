@@ -1,6 +1,5 @@
 import javax.swing.*;
 
-
 public class MainGUI {
     private JTabbedPane pane;
     private JFrame frame;
@@ -22,8 +21,16 @@ public class MainGUI {
     public void showLogIn() {
         // JPanel de LogIn se añade al JFrame
         LogInGUI loginPanel = new LogInGUI(this);
-        frame.setContentPane(loginPanel); // Cambia el contenido a LogInGUI
+        frame.setContentPane(loginPanel); // Cambiar el contenido a LogInGUI
         frame.setVisible(true);
+    }
+
+    public void showNewUserPanel() {
+        // Cambiar al panel de creación de usuario
+        NewUserGUI newUserPanel = new NewUserGUI(this); // Pasar la instancia de MainGUI
+        frame.setContentPane(newUserPanel); // Cambiar el contenido a NewUserGUI
+        frame.revalidate();
+        frame.repaint();
     }
 
     public void mostrarMenu() {

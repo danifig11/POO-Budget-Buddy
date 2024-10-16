@@ -16,20 +16,14 @@ public class NewUserGUI extends JPanel {
     boolean logueado = false;
     String rutaArchivo = "usuarios.csv"; 
 
-    public NewUserGUI() {
+    private MainGUI main; // Referencia al main
+
+    public NewUserGUI(MainGUI main) {
+        this.main = main; // Asignar el main
         NewUserFrame();
     }
     
-    public void NewUserFrame(){
-        JFrame frame = new JFrame("Nuevo Usuario");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300); // Tamaño de la ventana
-        frame.setLocationRelativeTo(null); // Centrar la ventana
-
-        // Crear panel para el login con GridBagLayout para un diseño flexible
-        JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(new Color(60, 63, 65)); // Fondo oscuro
-
+    public void NewUserFrame() {
         setLayout(new GridBagLayout());
         setBackground(new Color(60, 63, 65));
         GridBagConstraints gbc = new GridBagConstraints();
@@ -94,20 +88,17 @@ public class NewUserGUI extends JPanel {
                 Usuario user = new Usuario(nombre, 0.0, contra);  // Inicialmente con gasto 0
                 usuarios.add(user);
                 GestorCSV.guardarUsuarios(usuarios, rutaArchivo);  // Guardar al archivo CSV
+                JOptionPane.showMessageDialog(NewUserGUI.this, "Usuario creado exitosamente.");
+                main.showLogIn(); // Regresar a la ventana de login
             }
         });
 
         // Acción del botón de regresar al login
-        backButton.addActionListener(e -> {
-            frame.dispose(); // Cerrar la ventana actual
-            // Regresar a la ventana de login
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                main.showLogIn(); // Volver al login
+            }
         });
-
-        // Añadir el panel al marco y hacerlo visible
-        frame.getContentPane().add(panel);
-        frame.setVisible(true);
     }
-     
-    
 }
-
