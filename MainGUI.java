@@ -1,5 +1,6 @@
 import javax.swing.*;
 
+
 public class MainGUI {
     private JTabbedPane pane;
     private JFrame frame;
