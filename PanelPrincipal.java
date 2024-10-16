@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class MainPanel extends JPanel {
-    public MainPanel() {
+public class PanelPrincipal extends JPanel {
+    public PanelPrincipal() {
         setLayout(new BorderLayout());
         setBackground(new Color(60, 63, 65));
 
