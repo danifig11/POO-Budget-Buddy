@@ -37,41 +37,63 @@ public class MainGUI {
         pane.addTab("Pestaña 1", panel1);
 
         // Pestaña 2 (Formulario para calcular gastos)
-        JPanel panel2 = new JPanel(new GridBagLayout()); // Usamos GridBagLayout para un diseño flexible
+        JPanel panel2 = new JPanel(new BorderLayout(10, 10));
+        panel2.setBackground(new Color(45, 45, 48)); // Fondo oscuro
+
+        // Panel para el formulario
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        formPanel.setBackground(new Color(60, 63, 65)); // Fondo del formulario
+
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Margen entre componentes
+        gbc.insets = new Insets(10, 10, 10, 10); // Espaciado entre componentes
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Que las componentes se expandan horizontalmente
+        gbc.anchor = GridBagConstraints.WEST;
 
-        // Etiqueta y campo para ingresar los gastos semanales
+        // Etiqueta de gastos semanales
         JLabel gastosLabel = new JLabel("Ingrese sus gastos semanales (Q): ");
+        gastosLabel.setForeground(Color.WHITE);
+        gastosLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.WEST;
-        panel2.add(gastosLabel, gbc);
+        formPanel.add(gastosLabel, gbc);
 
-        JTextField gastosField = new JTextField(10); // Campo de texto para gastos
+        // Campo de texto para gastos
+        JTextField gastosField = new JTextField(15);
         gbc.gridx = 1;
         gbc.gridy = 0;
-        panel2.add(gastosField, gbc);
+        formPanel.add(gastosField, gbc);
 
-        // Etiqueta y campo para ingresar el presupuesto semanal
+        // Etiqueta de presupuesto semanal
         JLabel presupuestoLabel = new JLabel("Ingrese su presupuesto semanal (Q): ");
+        presupuestoLabel.setForeground(Color.WHITE);
+        presupuestoLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.anchor = GridBagConstraints.WEST;
-        panel2.add(presupuestoLabel, gbc);
+        formPanel.add(presupuestoLabel, gbc);
 
-        JTextField presupuestoField = new JTextField(10); // Campo de texto para presupuesto
+        // Campo de texto para presupuesto
+        JTextField presupuestoField = new JTextField(15);
         gbc.gridx = 1;
         gbc.gridy = 1;
-        panel2.add(presupuestoField, gbc);
+        formPanel.add(presupuestoField, gbc);
 
-        // Botón para calcular el dinero restante
+        // Añadir el formulario al panel principal
+        panel2.add(formPanel, BorderLayout.CENTER);
+
+        // Panel para el botón de cálculo
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(new Color(45, 45, 48));
+
         JButton calcularButton = new JButton("Calcular");
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 2; // Hacer que el botón ocupe dos columnas
-        gbc.anchor = GridBagConstraints.CENTER;
-        panel2.add(calcularButton, gbc);
+        calcularButton.setBackground(new Color(75, 110, 175));
+        calcularButton.setForeground(Color.WHITE);
+        calcularButton.setFocusPainted(false); // Quitar el borde de enfoque
+        calcularButton.setFont(new Font("Arial", Font.BOLD, 14));
+        calcularButton.setPreferredSize(new Dimension(150, 40));
+        buttonPanel.add(calcularButton);
+
+        // Añadir el botón en la parte inferior del panel principal
+        panel2.add(buttonPanel, BorderLayout.SOUTH);
 
         // Acción al hacer clic en el botón calcular
         calcularButton.addActionListener(new ActionListener() {
