@@ -6,12 +6,12 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class LogInGUI extends JPanel{
+public class LogInGUI extends JPanel {
 
     BufferedReader md = new BufferedReader(new InputStreamReader(System.in));
     ArrayList<Usuario> usuarios = GestorCSV.cargarUsuarios("usuarios.csv"); // Cargar usuarios desde CSV
     boolean logueado = false;
-    String rutaArchivo = "usuarios.csv"; 
+    String rutaArchivo = "usuarios.csv";
 
     private JTextField userText;
     private JPasswordField passwordText;
@@ -21,9 +21,8 @@ public class LogInGUI extends JPanel{
     public LogInGUI(MainGUI main) {
         this.main = main;
         LogInPane();
-
     }
-    
+
     private void LogInPane() {
 
         // Crear panel para el login con GridBagLayout para un diseño flexible
@@ -84,16 +83,20 @@ public class LogInGUI extends JPanel{
         newUserButton.setBackground(new Color(75, 110, 175)); // Color de fondo del botón
         newUserButton.setForeground(Color.WHITE); // Color del texto del botón
         newUserButton.setFocusPainted(false); // Quitar el borde de selección
-        newUserButton.setOpaque(false);// Quitar la opacidad del botón
-        newUserButton.setContentAreaFilled(false); //Quitar el color que rodea al botón
+        newUserButton.setOpaque(false); // Quitar la opacidad del botón
+        newUserButton.setContentAreaFilled(false); // Quitar el color que rodea al botón
         newUserButton.setBorderPainted(false); // Quitar el borde del botón
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 2; // Hacer que el botón ocupe 2 columnas
         panel.add(newUserButton, gbc);
 
-         // botón de login
-         loginButton.addActionListener(new ActionListener() {
+        // Añadir el panel de login a este JPanel
+        this.setLayout(new BorderLayout());
+        this.add(panel, BorderLayout.CENTER);
+
+        // botón de login
+        loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 verify();
@@ -106,30 +109,26 @@ public class LogInGUI extends JPanel{
                 // Mostrar el panel de nuevo usuario
             }
         });
-
-        
-
     }
 
     private void verify() {
         String nombre = userText.getText();
-                String contra = String.valueOf(passwordText.getPassword());
+        String contra = String.valueOf(passwordText.getPassword());
 
-                // Validar usuario y contraseña
-                for (Usuario usuario : usuarios) { // Verificar usuario
-                    if (usuario.getNombre().equals(nombre) && usuario.getContraseña().equals(contra)) {
-                        System.out.println("Inicio de sesión exitoso!");
-                        logueado = true;
-                        JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso.");
-                        main.mostrarMenu();
-            
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
+        // Validar usuario y contraseña
+        boolean usuarioValido = false;
+        for (Usuario usuario : usuarios) { // Verificar usuario
+            if (usuario.getNombre().equals(nombre) && usuario.getContraseña().equals(contra)) {
+                logueado = true;
+                JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso.");
+                main.mostrarMenu();
+                usuarioValido = true;
+                break; // Romper el ciclo si se encuentra el usuario
+            }
+        }
+
+        if (!usuarioValido) {
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
-
-
-
-
 }
