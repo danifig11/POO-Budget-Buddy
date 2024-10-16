@@ -1,14 +1,28 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class LogInGUI extends JPanel{
 
-    private JTextField userText;
-    private JPasswordField passwordText;
-    private JButton loginButton, newUserButton;
+    NewUserGUI newUser;
+
+    BufferedReader md = new BufferedReader(new InputStreamReader(System.in));
+    ArrayList<Usuario> usuarios = GestorCSV.cargarUsuarios("usuarios.csv"); // Cargar usuarios desde CSV
+    boolean logueado = false;
+    String rutaArchivo = "usuarios.csv"; 
+
 
     public LogInGUI() {
+        LogInFrame();
+    }
+    
+    private void LogInFrame() {
         JFrame frame = new JFrame("Login");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300); // Tamaño de la ventana
@@ -79,23 +93,39 @@ public class LogInGUI extends JPanel{
         gbc.gridy = 3;
         gbc.gridwidth = 2; // Hacer que el botón ocupe 2 columnas
         panel.add(newUserButton, gbc);
+
+         // botón de login
+         loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombre = userText.getText();
+                String contra = String.valueOf(passwordText.getPassword());
+
+                // Validar usuario y contraseña
+                for (Usuario usuario : usuarios) { // Verificar usuario
+                    if (usuario.getNombre().equals(nombre) && usuario.getContraseña().equals(contra)) {
+                        System.out.println("Inicio de sesión exitoso!");
+                        logueado = true;
+                        break;
+                    }
+                }
+            }
+        });
+
+        newUserButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Mostrar el panel de nuevo usuario
+            }
+        });
+
+        
+
+        frame.getContentPane().add(panel);
+        frame.setVisible(true); 
+
     }
     
-    public String getUsername() {
-        return userText.getText();
-    }
 
-    public String getPassword() {
-        return new String(passwordText.getPassword());
-    }
 
-    public void addLoginListener(ActionListener listener) {
-        loginButton.addActionListener(listener);
-    }
-
-    public void addNewUserListener(ActionListener listener) {
-        newUserButton.addActionListener(listener);
-    }
-
-    
 }

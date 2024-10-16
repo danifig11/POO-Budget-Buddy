@@ -65,20 +65,6 @@ public class NewUserGUI extends JPanel {
         add(backButton, gbc);
     }
 
-    public String getUsername() {
-        return userText.getText();
-    }
-
-    public String getPassword() {
-        return new String(passwordText.getPassword());
-    }
-
-    public void addCreateUserListener(ActionListener listener) {
-        createUserButton.addActionListener(listener);
-    }
-
-    public void addBackListener(ActionListener listener) {
-        backButton.addActionListener(listener);
-    }
+    
 }
 
