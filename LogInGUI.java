@@ -103,10 +103,11 @@ public class LogInGUI extends JPanel {
             }
         });
 
+        // Acción del botón de nuevo usuario
         newUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Mostrar el panel de nuevo usuario
+                main.showNewUserPanel(); // Cambiar al panel de crear usuario
             }
         });
     }
