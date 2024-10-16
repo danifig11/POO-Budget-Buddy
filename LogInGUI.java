@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 public class LogInGUI extends JPanel{
 
-    NewUserGUI newUser;
-
     BufferedReader md = new BufferedReader(new InputStreamReader(System.in));
     ArrayList<Usuario> usuarios = GestorCSV.cargarUsuarios("usuarios.csv"); // Cargar usuarios desde CSV
     boolean logueado = false;
@@ -116,6 +114,7 @@ public class LogInGUI extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Mostrar el panel de nuevo usuario
+                frame.dispose();
             }
         });
 
