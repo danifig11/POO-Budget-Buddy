@@ -31,10 +31,22 @@ public class MainGUI {
     public void mostrarMenu() {
         pane = new JTabbedPane(); // Inicializar el pane antes de usarlo
 
-        // Pestaña 1 (Puede tener cualquier contenido)
+        // Pestaña 1
         JPanel panel1 = new JPanel();
-        panel1.add(new JLabel("Panel 1"));
-        pane.addTab("Pestaña 1", panel1);
+        panel1.setBackground(new Color(45, 45, 48)); // Fondo oscuro para coincidir con la otra pestaña
+        panel1.setLayout(new GridBagLayout()); // Usamos GridBagLayout para centrar el texto
+
+        // Etiqueta con el mensaje
+        JLabel messageLabel = new JLabel("Para ingresar tus datos, ve a la pestaña 2");
+        messageLabel.setForeground(Color.WHITE); // Color del texto blanco para que contraste con el fondo
+        messageLabel.setFont(new Font("Arial", Font.BOLD, 16)); // Fuente más grande y negrita
+
+        // Configuramos la posición de la etiqueta
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10); // Espaciado alrededor de la etiqueta
+        panel1.add(messageLabel, gbc); // Añadir la etiqueta al panel
+
+        pane.addTab("Pestaña 1", panel1); // Añadir la pestaña 1
 
         // Pestaña 2 (Formulario para calcular gastos)
         JPanel panel2 = new JPanel(new BorderLayout(10, 10));
@@ -44,7 +56,7 @@ public class MainGUI {
         JPanel formPanel = new JPanel(new GridBagLayout());
         formPanel.setBackground(new Color(60, 63, 65)); // Fondo del formulario
 
-        GridBagConstraints gbc = new GridBagConstraints();
+        gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10); // Espaciado entre componentes
         gbc.fill = GridBagConstraints.HORIZONTAL; // Que las componentes se expandan horizontalmente
         gbc.anchor = GridBagConstraints.WEST;
