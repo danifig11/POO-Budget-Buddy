@@ -57,10 +57,10 @@ public class MainGUI {
         gbc.gridy = 0;
         formPanel.add(gastosLabel, gbc);
 
-        // Campo de texto para gastos
-        JTextField gastosField = new JTextField(15);
-        gbc.gridx = 1;
-        gbc.gridy = 0;
+        // Campo de texto para gastos (debajo de la etiqueta)
+        JTextField gastosField = new JTextField(20); // Más grande
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         formPanel.add(gastosField, gbc);
 
         // Etiqueta de presupuesto semanal
@@ -68,13 +68,13 @@ public class MainGUI {
         presupuestoLabel.setForeground(Color.WHITE);
         presupuestoLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         formPanel.add(presupuestoLabel, gbc);
 
-        // Campo de texto para presupuesto
-        JTextField presupuestoField = new JTextField(15);
-        gbc.gridx = 1;
-        gbc.gridy = 1;
+        // Campo de texto para presupuesto (debajo de la etiqueta)
+        JTextField presupuestoField = new JTextField(20); // Más grande
+        gbc.gridx = 0;
+        gbc.gridy = 3;
         formPanel.add(presupuestoField, gbc);
 
         // Añadir el formulario al panel principal
