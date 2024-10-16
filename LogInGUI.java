@@ -13,16 +13,17 @@ public class LogInGUI extends JPanel{
     boolean logueado = false;
     String rutaArchivo = "usuarios.csv"; 
 
+    private JTextField userText;
+    private JPasswordField passwordText;
+    private JButton loginButton, newUserButton;
+    private MainGUI main;
 
-    public LogInGUI() {
+    public LogInGUI(MainGUI main) {
+        this.main = main;
         LogInFrame();
     }
     
     private void LogInFrame() {
-        JFrame frame = new JFrame("Login");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300); // Tamaño de la ventana
-        frame.setLocationRelativeTo(null); // Centrar la ventana
 
         // Crear panel para el login con GridBagLayout para un diseño flexible
         JPanel panel = new JPanel(new GridBagLayout());
@@ -112,17 +113,10 @@ public class LogInGUI extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Mostrar el panel de nuevo usuario
-                frame.dispose();
             }
         });
 
-        
-
-        frame.getContentPane().add(panel);
-        frame.setVisible(true); 
-
     }
-    
 
 
 }
