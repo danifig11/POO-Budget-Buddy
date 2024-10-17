@@ -28,6 +28,15 @@ public class MainGUI {
         frame.setVisible(true);
     }
 
+    public void showNewUserPanel() {
+        // Cambiar al panel de creación de usuario
+        NewUserGUI newUserPanel = new NewUserGUI(this); // Pasar la instancia de MainGUI
+        frame.setContentPane(newUserPanel); // Cambiar el contenido a NewUserGUI
+        frame.revalidate();
+        frame.repaint();
+    }
+
+
     public void mostrarMenu() {
         pane = new JTabbedPane(); // Inicializar el pane antes de usarlo
 
