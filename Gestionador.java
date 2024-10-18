@@ -1,13 +1,17 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class Gestionador {
     private ArrayList<Usuario> usuarios;
     private String rutaArchivo;
+    private List<String> recomendacionesAhorro;
+    
     public Gestionador(ArrayList<Usuario> usuarios, String rutaArchivo, List<String> recomendacionesAhorro, List<String> alertasGasto) {
         this.usuarios = usuarios;
         this.rutaArchivo = rutaArchivo;
+        this.recomendacionesAhorro = recomendacionesAhorro;
     }
 
     public String registrarUsuario(String nombre, String contra) {
@@ -49,6 +53,13 @@ public class Gestionador {
         }
         return "Usuario no encontrado.";
         // Ejemplo de retorno: "Gasto total: 1000.0, Ahorro total: 500.0"
+    }
+
+    public String obtenerRecomendacionAhorro() {
+        Random random = new Random();
+        String recomendacion = recomendacionesAhorro.get(random.nextInt(recomendacionesAhorro.size()));
+        return "Recomendaciones de ahorro: " + recomendacion;
+        // Ejemplo de retorno: "Recomendaciones de ahorro: Lleva un registro detallado de tus gastos para identificar áreas en las que puedas recortar."
     }
 
 
