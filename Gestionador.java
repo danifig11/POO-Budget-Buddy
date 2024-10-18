@@ -28,5 +28,18 @@ public class Gestionador {
         // Ejemplo de retorno: "Inicio de sesión exitoso!" o "Nombre de usuario o contraseña incorrectos."
     }
 
+    public String registrarIngresosGastos(String nombre, double gasto, double ahorro) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombre().equals(nombre)) {
+                usuario.setGasto(usuario.getGasto() + gasto);
+                usuario.setAhorro(usuario.getAhorro() + ahorro);
+                GestorCSV.guardarUsuarios(usuarios, rutaArchivo);
+                return "Gastos y ahorros registrados.";
+            }
+        }
+        return "Usuario no encontrado.";
+        // Ejemplo de retorno: "Gastos y ahorros registrados."
+    }
+
 
 }
