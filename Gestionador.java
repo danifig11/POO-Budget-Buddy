@@ -83,5 +83,29 @@ public class Gestionador {
         return "Datos exportados correctamente.";
         // Ejemplo de retorno: "Datos exportados correctamente."
     }
-
+    
+    public String realizarCuestionario() {
+        CuestionarioFinanzas cuestionario = new CuestionarioFinanzas();
+        StringBuilder resultados = new StringBuilder();
+        String[][] preguntas = cuestionario.getPreguntas();
+        int puntaje = 0;
+        
+        for (int i = 0; i < preguntas.length; i++) {
+            resultados.append("\nPregunta ").append(i + 1).append(": ").append(preguntas[i][0]).append("\n");
+            resultados.append("Opciones:\n");
+            resultados.append("1. ").append(preguntas[i][1]).append("\n");
+            resultados.append("2. ").append(preguntas[i][2]).append("\n");
+            resultados.append("3. ").append(preguntas[i][3]).append("\n");
+            int respuestaCorrecta = Integer.parseInt(preguntas[i][4]);
+            if (respuestaCorrecta == 1) { // Simulando que la respuesta correcta es siempre la primera opción
+                resultados.append("Respuesta correcta: 1\n");
+                puntaje++;
+            } else {
+                resultados.append("Respuesta incorrecta.\n");
+            }
+        }
+        resultados.append("\nTu puntaje final es: ").append(puntaje).append("/").append(preguntas.length).append("\n");
+        return resultados.toString();
+        // Ejemplo de retorno: "Tu puntaje final es: 3/5"
+    }
 }
