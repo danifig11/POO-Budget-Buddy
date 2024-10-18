@@ -41,5 +41,15 @@ public class Gestionador {
         // Ejemplo de retorno: "Gastos y ahorros registrados."
     }
 
+    public String verDatosFinancieros(String nombre) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombre().equals(nombre)) {
+                return "Gasto total: " + usuario.getGasto() + ", Ahorro total: " + usuario.getAhorro();
+            }
+        }
+        return "Usuario no encontrado.";
+        // Ejemplo de retorno: "Gasto total: 1000.0, Ahorro total: 500.0"
+    }
+
 
 }
