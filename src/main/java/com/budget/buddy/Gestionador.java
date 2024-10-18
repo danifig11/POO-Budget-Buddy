@@ -1,3 +1,5 @@
+package com.budget.buddy;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -109,3 +111,6 @@ public class Gestionador {
         // Ejemplo de retorno: "Tu puntaje final es: 3/5"
     }
 }
+
+
+

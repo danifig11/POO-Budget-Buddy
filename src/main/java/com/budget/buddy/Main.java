@@ -42,7 +42,7 @@ public class Main {
     );
 
     public static void main(String[] args) {
-        ejecutarMenuPrincipal();  //manda a llamar metodo
+        ejecutarMenuPrincipal();
     }
 
     private static void ejecutarMenuPrincipal() {
@@ -50,23 +50,23 @@ public class Main {
         while (continuar) {   
             try {
                 mostrarOpcionesMenuPrincipal();  //se manda a llamar funcion
-                int opcion = Integer.parseInt(md.readLine());  //lee la linea
+                int opcion = Integer.parseInt(md.readLine());
                 switch (opcion) {
                     case 1:
-                        registrarUsuario();//se manda a llamar funcion
+                        registrarUsuario();
                         break;
                     case 2:
-                        iniciarSesion();//se manda a llamar funcion
+                        iniciarSesion();
                         break;
-                    case 3: //si elige que quiere salir
+                    case 3:
                         continuar = false; // Salir del programa
                         System.out.println("Saliendo...");
                         break;
-                    default: //por si no elige algo
+                    default:
                         System.out.println("Opción no válida, intenta de nuevo.");
                         break;
                 }
-            } catch (Exception e) {  //uso de errores predefinidos
+            } catch (Exception e) {
                 System.out.println("Ha ocurrido un error: " + e.getMessage());
             }
         }
@@ -88,7 +88,6 @@ public class Main {
         String bancoNombre = md.readLine();
         System.out.println("Ingrese la página web de su banco:");
         String bancoPagina = md.readLine();
-        Banco banco = new Banco(bancoNombre, bancoPagina);
         Usuario user = new Usuario(nombre, 0.0, contra);  // Inicialmente con gasto 0
         usuarios.add(user);
         GestorCSV.guardarUsuarios(usuarios, rutaArchivo);  // Guardar al archivo CSV

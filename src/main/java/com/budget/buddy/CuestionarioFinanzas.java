@@ -1,3 +1,5 @@
+package com.budget.buddy;
+
 public class CuestionarioFinanzas {
 
     // Lista de preguntas en un arreglo bidimensional para poder acceder a cada pregunta y sus posibles opciones
