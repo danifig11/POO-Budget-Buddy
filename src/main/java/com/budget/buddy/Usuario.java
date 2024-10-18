@@ -1,3 +1,4 @@
+package com.budget.buddy;
 import java.util.ArrayList;
 
 public class Usuario {

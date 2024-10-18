@@ -1,15 +1,4 @@
-/*UNIVERSIDAD DE VALLE DE GUATEMALA
- * CAMPUS CENTRAL
- * PROGRAMACION ORIENTADA A OBJETOS
- * ESTEBAN EMILIO CUMATZ QUINA, 24449
- * ADRIAN PENAGOS, 24914
- * DENIL PARADA, 24761
- * fIGUERA REYES, 24073
- * JOEL JOSUE NERIO ALONZO, 24253
- * PROYECTO PARTE 3
- */
-
-
+package com.budget.buddy;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

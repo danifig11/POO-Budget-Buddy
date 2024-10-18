@@ -1,4 +1,5 @@
-import java.io.BufferedReader;
+package com.budget.buddy;
+import java.io.BufferedReader;   //se importan las librerias que se utilizaran
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,30 +47,106 @@ public class Main {
             try {
                 System.out.println("Ingrese una opción: \n1. Registrarse  \n2. Iniciar sesión \n3. Salir");
                 int opcion = Integer.parseInt(md.readLine());
-                
-                if (opcion == 1) { // Crear un usuario
-                    System.out.println("Ingrese su nombre de usuario:");
-                    String nombre = md.readLine();
-                    System.out.println("Ingrese su contraseña:");
-                    String contra = md.readLine();
-                    Usuario user = new Usuario(nombre, 0.0, contra);  // Inicialmente con gasto 0
-                    usuarios.add(user);
-                    GestorCSV.guardarUsuarios(usuarios, rutaArchivo);  // Guardar al archivo CSV
-                    System.out.println("Usuario creado y guardado exitosamente!");
-                } 
-                else if (opcion == 2) { // Iniciar sesión
-                    System.out.println("Ingrese su nombre de usuario:");
-                    String nombre = md.readLine();
-                    System.out.println("Ingrese su contraseña:");
-                    String contra = md.readLine();
-                    
-                    for (Usuario usuario : usuarios) { // Verificar usuario
-                        if (usuario.getNombre().equals(nombre) && usuario.getContraseña().equals(contra)) {
-                            System.out.println("Inicio de sesión exitoso!");
-                            logueado = true;
-                            break;
-                        }
-                    }
+                switch (opcion) {
+                    case 1:
+                        registrarUsuario();
+                        break;
+                    case 2:
+                        iniciarSesion();
+                        break;
+                    case 3:
+                        continuar = false; // Salir del programa
+                        System.out.println("Saliendo...");
+                        break;
+                    default:
+                        System.out.println("Opción no válida, intenta de nuevo.");
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println("Ha ocurrido un error: " + e.getMessage());
+            }
+        }
+    }
+
+    private static void mostrarOpcionesMenuPrincipal() {
+        System.out.println("Ingrese una opción: ");
+        System.out.println("1. Registrarse");
+        System.out.println("2. Iniciar sesión");
+        System.out.println("3. Salir");
+    }
+
+    private static void registrarUsuario() throws Exception {
+        System.out.println("Ingrese su nombre de usuario:");
+        String nombre = md.readLine();
+        System.out.println("Ingrese su contraseña:");
+        String contra = md.readLine();
+        System.out.println("Ingrese su banco:");
+        String bancoNombre = md.readLine();
+        System.out.println("Ingrese la página web de su banco:");
+        String bancoPagina = md.readLine();
+        Usuario user = new Usuario(nombre, 0.0, contra);  // Inicialmente con gasto 0
+        usuarios.add(user);
+        GestorCSV.guardarUsuarios(usuarios, rutaArchivo);  // Guardar al archivo CSV
+        System.out.println("Usuario creado y guardado exitosamente!");
+    }
+
+    private static void iniciarSesion() throws Exception {
+        System.out.println("Ingrese su nombre de usuario:");
+        String nombre = md.readLine();
+        System.out.println("Ingrese su contraseña:");
+        String contra = md.readLine();
+
+        Usuario usuarioLogueado = validarCredenciales(nombre, contra);
+        if (usuarioLogueado != null) {
+            ejecutarMenuUsuario(usuarioLogueado);
+        } else {
+            System.out.println("Nombre de usuario o contraseña incorrectos.");
+        }
+    }
+
+    private static Usuario validarCredenciales(String nombre, String contra) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombre().equals(nombre) && usuario.getContraseña().equals(contra)) {
+                System.out.println("Inicio de sesión exitoso!");
+                return usuario;
+            }
+        }
+        return null;
+    }
+
+    private static void ejecutarMenuUsuario(Usuario usuario) throws Exception {
+        boolean enMenu = true;
+        while (enMenu) {
+            mostrarOpcionesMenuUsuario();
+            int opcionMenu = Integer.parseInt(md.readLine());
+            switch (opcionMenu) {
+                case 1:
+                    registrarIngresosYGastos(usuario);
+                    break;
+                case 2:
+                    verDatosFinancieros(usuario);
+                    break;
+                case 3:
+                    mostrarRecomendacionAhorro();
+                    break;
+                case 4:
+                    mostrarAlertasGasto(usuario);
+                    break;
+                case 5:
+                    sincronizarCuentasBancarias();
+                    break;
+                case 6:
+                    exportarYGuardarDatos();
+                    break;
+                case 7:
+                    enMenu = false;
+                    System.out.println("Cerrando sesión...");
+                    break;
+                default:
+                    System.out.println("Opción no válida, intenta de nuevo.");
+            }
+        }
+    }
 
                     if (logueado) { // Menú después de iniciar sesión
                         boolean enMenu = true;

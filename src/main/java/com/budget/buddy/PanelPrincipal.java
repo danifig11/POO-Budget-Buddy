@@ -1,5 +1,11 @@
-import javax.swing.*;
-import java.awt.*;
+package com.budget.buddy;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class PanelPrincipal extends JPanel {
     public PanelPrincipal() {

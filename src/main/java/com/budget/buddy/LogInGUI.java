@@ -1,3 +1,4 @@
+package com.budget.buddy;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
