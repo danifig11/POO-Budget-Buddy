@@ -7,11 +7,13 @@ public class Gestionador {
     private ArrayList<Usuario> usuarios;
     private String rutaArchivo;
     private List<String> recomendacionesAhorro;
-    
+    private List<String> alertasGasto;
+
     public Gestionador(ArrayList<Usuario> usuarios, String rutaArchivo, List<String> recomendacionesAhorro, List<String> alertasGasto) {
         this.usuarios = usuarios;
         this.rutaArchivo = rutaArchivo;
         this.recomendacionesAhorro = recomendacionesAhorro;
+        this.alertasGasto = alertasGasto;
     }
 
     public String registrarUsuario(String nombre, String contra) {
@@ -62,5 +64,18 @@ public class Gestionador {
         // Ejemplo de retorno: "Recomendaciones de ahorro: Lleva un registro detallado de tus gastos para identificar áreas en las que puedas recortar."
     }
 
+    public String verificarAlertasGasto(String nombre) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombre().equals(nombre) && usuario.getGasto() > 500) {
+                Random random = new Random();
+                String alerta = alertasGasto.get(random.nextInt(alertasGasto.size()));
+                return alerta;
+            } else if (usuario.getNombre().equals(nombre)) {
+                return "Sus gastos están dentro del límite.";
+            }
+        }
+        return "Usuario no encontrado.";
+        // Ejemplo de retorno: "¡Atención! Has sobrepasado tu límite de gasto. Considera recortar algunos gastos innecesarios."
+    }
 
 }
