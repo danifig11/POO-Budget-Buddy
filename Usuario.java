@@ -4,7 +4,7 @@ public class Usuario {
     private String nombre; 
     private double gasto; 
     private double ahorro; 
-    private String contraseña; 
+    private String contraseña;
     private ArrayList <Articulo> articulos = new ArrayList<>();
     
 
@@ -43,7 +43,6 @@ public class Usuario {
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
-    
     public ArrayList<Articulo> getArticulos() {
         return articulos;
     }
