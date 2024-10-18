@@ -78,4 +78,10 @@ public class Gestionador {
         // Ejemplo de retorno: "¡Atención! Has sobrepasado tu límite de gasto. Considera recortar algunos gastos innecesarios."
     }
 
+    public String exportarGuardarDatos() {
+        GestorCSV.guardarUsuarios(usuarios, rutaArchivo);
+        return "Datos exportados correctamente.";
+        // Ejemplo de retorno: "Datos exportados correctamente."
+    }
+
 }
