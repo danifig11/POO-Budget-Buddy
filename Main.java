@@ -52,12 +52,7 @@ public class Main {
                     String nombre = md.readLine();
                     System.out.println("Ingrese su contraseña:");
                     String contra = md.readLine();
-                    System.out.println("Ingrese su banco:");
-                    String bancoNombre = md.readLine();
-                    System.out.println("Ingrese la página web de su banco:");
-                    String bancoPagina = md.readLine();
-                    Banco banco = new Banco(bancoNombre, bancoPagina);
-                    Usuario user = new Usuario(nombre, 0.0, contra, banco);  // Inicialmente con gasto 0
+                    Usuario user = new Usuario(nombre, 0.0, contra);  // Inicialmente con gasto 0
                     usuarios.add(user);
                     GestorCSV.guardarUsuarios(usuarios, rutaArchivo);  // Guardar al archivo CSV
                     System.out.println("Usuario creado y guardado exitosamente!");
