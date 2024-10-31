@@ -21,11 +21,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class MainGUI {
     private JTabbedPane pane;
     private JFrame frame;
     private Usuario usuario;
+    private ArrayList<Usuario> usuarios;
 
     private double gastosMensuales = 0;
     private double presupuestoMensual = 0;
@@ -37,6 +39,7 @@ public class MainGUI {
     private DefaultListModel<String> listaArticulosModel;
     private JLabel totalGastosLabel;
     private JLabel totalIngresosLabel;
+    private String rutaArchivoUsuarios = "usuarios.csv";
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -50,8 +53,14 @@ public class MainGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
         frame.setLocationRelativeTo(null);
+
+        // Cargar usuarios desde el archivo
+        usuarios = GestorCSV.cargarUsuarios(rutaArchivoUsuarios);
         
-        usuario = new Usuario("Ejemplo", 0, "contraseña123"); // Usuario de ejemplo
+        // Seleccionar un usuario de ejemplo (puedes cambiar esta lógica para seleccionar el usuario adecuado)
+        if (!usuarios.isEmpty()) {
+            usuario = usuarios.get(0); // Usuario de ejemplo
+        }
     }
 
     public void showLogIn() {
@@ -185,11 +194,10 @@ public class MainGUI {
                     // Crear el artículo y agregarlo al usuario
                     Articulo articulo = new Articulo(nombreArticulo, gastoArticulo, "Lugar", "Fecha");
                     usuario.agregarArticulo(articulo);
-                    gastosMensuales += gastoArticulo;
+                    usuario.setGasto(usuario.getGasto() + gastoArticulo);
 
-                    // Guardar el artículo en el archivo CSV
-                    String rutaArchivoArticulos = "articulos.csv";
-                    GestorCSV.guardarArticulo(articulo, rutaArchivoArticulos);
+                    // Actualizar el archivo de usuarios
+                    GestorCSV.guardarUsuarios(usuarios, rutaArchivoUsuarios);
 
                     // Añadir el artículo a la lista visual
                     listaArticulosModel.addElement(nombreArticulo + " - Q" + gastoArticulo);
@@ -237,7 +245,7 @@ public class MainGUI {
     }
 
     private void actualizarTotales() {
-        totalGastosLabel.setText("Total Gastos: Q" + gastosMensuales);
+        totalGastosLabel.setText("Total Gastos: Q" + usuario.getGasto());
         totalIngresosLabel.setText("Total Ingresos: Q" + presupuestoMensual);
     }
 
