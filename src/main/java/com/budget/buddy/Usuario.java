@@ -49,12 +49,10 @@ public class Usuario {
         this.contraseña = contraseña;
     }
 
-    // Método para obtener la lista de artículos
     public ArrayList<Articulo> getArticulos() {
         return articulos;
     }
 
-    // Método para agregar un artículo a la lista
     public void agregarArticulo(Articulo articulo) {
         this.articulos.add(articulo);
     }

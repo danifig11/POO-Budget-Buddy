@@ -45,4 +45,18 @@ public class GestorCSV {
         }
         return usuarios;
     }
+
+    // Nuevo método para guardar artículos en un archivo separado
+    public static boolean guardarArticulo(Articulo articulo, String rutaArchivo) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true))) { // 'true' para agregar en lugar de sobrescribir
+            String linea = articulo.getNombre() + DELIMITADOR + articulo.getPrecio() + DELIMITADOR 
+                    + articulo.getLugar() + DELIMITADOR + articulo.getFecha();
+            writer.write(linea);
+            writer.newLine();
+            return true;
+        } catch (IOException e) {
+            System.out.println("Error al guardar el archivo CSV de artículos: " + e.getMessage());
+            return false;
+        }
+    }
 }

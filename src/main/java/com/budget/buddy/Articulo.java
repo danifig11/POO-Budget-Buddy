@@ -1,4 +1,5 @@
 package com.budget.buddy;
+
 public class Articulo {
     private String nombre; 
     private double precio; 
@@ -42,7 +43,5 @@ public class Articulo {
     
     public void setFecha(String fecha) {
         this.fecha = fecha;
-    } 
-    
     }
-    
+}

@@ -21,7 +21,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class MainGUI {
     private JTabbedPane pane;
@@ -187,6 +186,10 @@ public class MainGUI {
                     Articulo articulo = new Articulo(nombreArticulo, gastoArticulo, "Lugar", "Fecha");
                     usuario.agregarArticulo(articulo);
                     gastosMensuales += gastoArticulo;
+
+                    // Guardar el artículo en el archivo CSV
+                    String rutaArchivoArticulos = "articulos.csv";
+                    GestorCSV.guardarArticulo(articulo, rutaArchivoArticulos);
 
                     // Añadir el artículo a la lista visual
                     listaArticulosModel.addElement(nombreArticulo + " - Q" + gastoArticulo);
