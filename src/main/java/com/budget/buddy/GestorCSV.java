@@ -1,4 +1,5 @@
 package com.budget.buddy;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -8,10 +9,9 @@ import java.util.ArrayList;
 
 public class GestorCSV {
 
-    private static final String DELIMITADOR = ",";  // Separador para el CSV
+    private static final String DELIMITADOR = ",";
 
-    // Guardar usuarios en el archivo CSV
-    public static void guardarUsuarios(ArrayList<Usuario> usuarios, String rutaArchivo) {
+    public static boolean guardarUsuarios(ArrayList<Usuario> usuarios, String rutaArchivo) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo))) {
             for (Usuario usuario : usuarios) {
                 String linea = usuario.getNombre() + DELIMITADOR + usuario.getGasto() + DELIMITADOR 
@@ -19,12 +19,13 @@ public class GestorCSV {
                 writer.write(linea);
                 writer.newLine();
             }
+            return true;
         } catch (IOException e) {
             System.out.println("Error al guardar el archivo CSV: " + e.getMessage());
+            return false;
         }
     }
 
-    // Cargar usuarios desde el archivo CSV
     public static ArrayList<Usuario> cargarUsuarios(String rutaArchivo) {
         ArrayList<Usuario> usuarios = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(rutaArchivo))) {
