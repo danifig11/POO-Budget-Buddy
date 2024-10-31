@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
 public class Gestionador {
     private ArrayList<Usuario> usuarios;
     private String rutaArchivo;
@@ -19,11 +18,21 @@ public class Gestionador {
     }
 
     public String registrarUsuario(String nombre, String contra) {
+        if (!validarContraseña(contra)) {
+            return "La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula y al menos un número.";
+        }
+
         Usuario user = new Usuario(nombre, 0.0, contra);
         usuarios.add(user);
         GestorCSV.guardarUsuarios(usuarios, rutaArchivo);
         return "Usuario creado y guardado exitosamente!";
-        // Ejemplo de retorno: "Usuario creado y guardado exitosamente!"
+    }
+
+    // Método para validar la contraseña
+    private boolean validarContraseña(String contraseña) {
+        // Expresión regular para al menos 8 caracteres, una mayúscula y un número
+        String regex = "^(?=.[A-Z])(?=.\\d).{8,}$";
+        return contraseña.matches(regex);
     }
 
     public String iniciarSesion(String nombre, String contra) {
@@ -33,7 +42,6 @@ public class Gestionador {
             }
         }
         return "Nombre de usuario o contraseña incorrectos.";
-        // Ejemplo de retorno: "Inicio de sesión exitoso!" o "Nombre de usuario o contraseña incorrectos."
     }
 
     public String registrarIngresosGastos(String nombre, double gasto, double ahorro) {
@@ -46,7 +54,6 @@ public class Gestionador {
             }
         }
         return "Usuario no encontrado.";
-        // Ejemplo de retorno: "Gastos y ahorros registrados."
     }
 
     public String verDatosFinancieros(String nombre) {
@@ -56,42 +63,46 @@ public class Gestionador {
             }
         }
         return "Usuario no encontrado.";
-        // Ejemplo de retorno: "Gasto total: 1000.0, Ahorro total: 500.0"
     }
 
     public String obtenerRecomendacionAhorro() {
+        if (recomendacionesAhorro.isEmpty()) {
+            return "No hay recomendaciones de ahorro disponibles.";
+        }
         Random random = new Random();
         String recomendacion = recomendacionesAhorro.get(random.nextInt(recomendacionesAhorro.size()));
-        return "Recomendaciones de ahorro: " + recomendacion;
-        // Ejemplo de retorno: "Recomendaciones de ahorro: Lleva un registro detallado de tus gastos para identificar áreas en las que puedas recortar."
+        return "Recomendación de ahorro: " + recomendacion;
     }
 
     public String verificarAlertasGasto(String nombre) {
         for (Usuario usuario : usuarios) {
-            if (usuario.getNombre().equals(nombre) && usuario.getGasto() > 500) {
-                Random random = new Random();
-                String alerta = alertasGasto.get(random.nextInt(alertasGasto.size()));
-                return alerta;
-            } else if (usuario.getNombre().equals(nombre)) {
-                return "Sus gastos están dentro del límite.";
+            if (usuario.getNombre().equals(nombre)) {
+                if (usuario.getGasto() > 500) {
+                    if (alertasGasto.isEmpty()) {
+                        return "No hay alertas de gasto disponibles.";
+                    }
+                    Random random = new Random();
+                    String alerta = alertasGasto.get(random.nextInt(alertasGasto.size()));
+                    return alerta;
+                } else {
+                    return "Sus gastos están dentro del límite.";
+                }
             }
         }
         return "Usuario no encontrado.";
-        // Ejemplo de retorno: "¡Atención! Has sobrepasado tu límite de gasto. Considera recortar algunos gastos innecesarios."
     }
 
     public String exportarGuardarDatos() {
         GestorCSV.guardarUsuarios(usuarios, rutaArchivo);
         return "Datos exportados correctamente.";
-        // Ejemplo de retorno: "Datos exportados correctamente."
     }
-    
+
     public String realizarCuestionario() {
         CuestionarioFinanzas cuestionario = new CuestionarioFinanzas();
         StringBuilder resultados = new StringBuilder();
         String[][] preguntas = cuestionario.getPreguntas();
         int puntaje = 0;
-        
+
         for (int i = 0; i < preguntas.length; i++) {
             resultados.append("\nPregunta ").append(i + 1).append(": ").append(preguntas[i][0]).append("\n");
             resultados.append("Opciones:\n");
@@ -99,8 +110,11 @@ public class Gestionador {
             resultados.append("2. ").append(preguntas[i][2]).append("\n");
             resultados.append("3. ").append(preguntas[i][3]).append("\n");
             int respuestaCorrecta = Integer.parseInt(preguntas[i][4]);
-            if (respuestaCorrecta == 1) { // Simulando que la respuesta correcta es siempre la primera opción
-                resultados.append("Respuesta correcta: 1\n");
+
+            // Simulación de respuesta correcta para el ejemplo
+            int respuestaSimulada = respuestaCorrecta; // Ajusta según sea necesario
+            if (respuestaSimulada == respuestaCorrecta) {
+                resultados.append("Respuesta correcta: ").append(respuestaSimulada).append("\n");
                 puntaje++;
             } else {
                 resultados.append("Respuesta incorrecta.\n");
@@ -108,9 +122,6 @@ public class Gestionador {
         }
         resultados.append("\nTu puntaje final es: ").append(puntaje).append("/").append(preguntas.length).append("\n");
         return resultados.toString();
-        // Ejemplo de retorno: "Tu puntaje final es: 3/5"
     }
 }
-
-
 

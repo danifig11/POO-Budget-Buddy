@@ -1,29 +1,28 @@
 package com.budget.buddy;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class NewUserGUI extends JPanel {
     private JTextField userText;
     private JPasswordField passwordText;
     private JButton createUserButton, backButton;
-
-    BufferedReader md = new BufferedReader(new InputStreamReader(System.in));
-    ArrayList<Usuario> usuarios = GestorCSV.cargarUsuarios("usuarios.csv"); // Cargar usuarios desde CSV
-    boolean logueado = false;
-    String rutaArchivo = "usuarios.csv"; 
-
+    private ArrayList<Usuario> usuarios;
+    private String rutaArchivo;
+    private Gestionador gestionador;
     private MainGUI main; // Referencia al main
 
     public NewUserGUI(MainGUI main) {
         this.main = main; // Asignar el main
+        this.rutaArchivo = "usuarios.csv"; // Ruta del archivo CSV
+        this.usuarios = GestorCSV.cargarUsuarios(rutaArchivo);
+        this.gestionador = new Gestionador(usuarios, rutaArchivo, new ArrayList<>(), new ArrayList<>());
         NewUserFrame();
     }
-    
+
     public void NewUserFrame() {
         setLayout(new GridBagLayout());
         setBackground(new Color(60, 63, 65));
@@ -36,8 +35,8 @@ public class NewUserGUI extends JPanel {
         userLabel.setFont(new Font("Arial", Font.BOLD, 14));
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.WEST; // Alinear a la izquierda
-        gbc.fill = GridBagConstraints.HORIZONTAL; // Hacer que ocupe todo el ancho
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         add(userLabel, gbc);
 
         // Campo de texto para usuario
@@ -66,7 +65,7 @@ public class NewUserGUI extends JPanel {
         createUserButton = new JButton("Crear Usuario");
         createUserButton.setBackground(new Color(75, 110, 175));
         createUserButton.setForeground(Color.WHITE);
-        createUserButton.setFocusPainted(false); // Quitar borde de enfoque
+        createUserButton.setFocusPainted(false);
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -86,11 +85,18 @@ public class NewUserGUI extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String nombre = userText.getText();
                 String contra = String.valueOf(passwordText.getPassword());
-                Usuario user = new Usuario(nombre, 0.0, contra);  // Inicialmente con gasto 0
-                usuarios.add(user);
-                GestorCSV.guardarUsuarios(usuarios, rutaArchivo);  // Guardar al archivo CSV
-                JOptionPane.showMessageDialog(NewUserGUI.this, "Usuario creado exitosamente.");
-                main.showLogIn(); // Regresar a la ventana de login
+
+                // Intentar registrar el usuario
+                String resultado = gestionador.registrarUsuario(nombre, contra);
+                
+                // Mostrar mensaje basado en el resultado de la validación
+                if (resultado.equals("Usuario creado y guardado exitosamente!")) {
+                    JOptionPane.showMessageDialog(NewUserGUI.this, resultado);
+                    main.showLogIn(); // Volver al login
+                } else {
+                    // Mostrar mensaje de error si la contraseña no cumple los requisitos
+                    JOptionPane.showMessageDialog(NewUserGUI.this, resultado, "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
