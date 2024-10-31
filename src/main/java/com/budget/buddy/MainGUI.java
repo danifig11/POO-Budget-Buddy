@@ -173,7 +173,13 @@ public class MainGUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    presupuestoMensual = Double.parseDouble(ingresoField.getText());
+                    double ingreso = Double.parseDouble(ingresoField.getText());
+                    usuario.setAhorro(usuario.getAhorro() + ingreso); // Actualizar ahorro del usuario
+                    presupuestoMensual = ingreso;
+
+                    // Guardar los cambios de ingreso en el archivo CSV
+                    GestorCSV.guardarUsuarios(usuarios, rutaArchivoUsuarios);
+                    
                     actualizarTotales();
                     ingresoField.setText("");
                     JOptionPane.showMessageDialog(formPanel, "Ingreso mensual agregado exitosamente.");
@@ -196,7 +202,7 @@ public class MainGUI {
                     usuario.agregarArticulo(articulo);
                     usuario.setGasto(usuario.getGasto() + gastoArticulo);
 
-                    // Actualizar el archivo de usuarios
+                    // Actualizar el archivo de usuarios con el nuevo gasto
                     GestorCSV.guardarUsuarios(usuarios, rutaArchivoUsuarios);
 
                     // Añadir el artículo a la lista visual
@@ -246,7 +252,7 @@ public class MainGUI {
 
     private void actualizarTotales() {
         totalGastosLabel.setText("Total Gastos: Q" + usuario.getGasto());
-        totalIngresosLabel.setText("Total Ingresos: Q" + presupuestoMensual);
+        totalIngresosLabel.setText("Total Ingresos: Q" + usuario.getAhorro());
     }
 
     private ChartPanel crearPanelGrafica() {
