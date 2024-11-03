@@ -273,5 +273,5 @@ public class MainGUI {
         );
 
         return new ChartPanel(barChart);
-    }
+        }
 }
