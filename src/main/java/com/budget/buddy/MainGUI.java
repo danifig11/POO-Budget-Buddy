@@ -76,36 +76,35 @@ public class MainGUI {
         frame.repaint();
     }
 
-    public void mostrarMenu() {
-        pane = new JTabbedPane();
+    private Graficas graficasPanel;
 
-        // Pestaña 1: Gráfica
-        JPanel panel1 = new JPanel(new BorderLayout());
-        panel1.setBackground(new Color(45, 45, 48));
-        ChartPanel chartPanel = crearPanelGrafica();
-        panel1.add(chartPanel, BorderLayout.CENTER);
-        pane.addTab("Gráfica", panel1);
+public void mostrarMenu() {
+    pane = new JTabbedPane();
 
-        // Pestaña 2: Formulario y lista de artículos
-        JPanel panel2 = new JPanel(new BorderLayout());
-        panel2.setBackground(new Color(45, 45, 48));
+    // Pestaña 1: Gráfica
+    JPanel panel1 = new JPanel(new BorderLayout());
+    panel1.setBackground(new Color(45, 45, 48));
+    graficasPanel = new Graficas(usuario); // Instanciar Graficas con el usuario
+    panel1.add(graficasPanel, BorderLayout.CENTER);
+    pane.addTab("Gráfica", panel1);
 
-        // Crear el formulario en el lado izquierdo
-        JPanel formPanel = crearPanelFormulario();
-        
-        // Crear el panel de lista en el lado derecho
-        JPanel listaPanel = crearPanelLista();
+    // Pestaña 2: Formulario y lista de artículos
+    JPanel panel2 = new JPanel(new BorderLayout());
+    panel2.setBackground(new Color(45, 45, 48));
 
-        // Dividir la pestaña en dos partes
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, formPanel, listaPanel);
-        splitPane.setDividerLocation(300);
-        panel2.add(splitPane, BorderLayout.CENTER);
+    JPanel formPanel = crearPanelFormulario();
+    JPanel listaPanel = crearPanelLista();
 
-        pane.addTab("Formulario y Gastos", panel2);
-        frame.setContentPane(pane);
-        frame.revalidate();
-        frame.repaint();
-    }
+    JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, formPanel, listaPanel);
+    splitPane.setDividerLocation(300);
+    panel2.add(splitPane, BorderLayout.CENTER);
+
+    pane.addTab("Formulario y Gastos", panel2);
+    frame.setContentPane(pane);
+    frame.revalidate();
+    frame.repaint();
+}
+
 
     private JPanel crearPanelFormulario() {
         JPanel formPanel = new JPanel(new GridBagLayout());
@@ -196,19 +195,22 @@ public class MainGUI {
                 try {
                     String nombreArticulo = nombreArticuloField.getText();
                     double gastoArticulo = Double.parseDouble(gastoArticuloField.getText());
-
+        
                     // Crear el artículo y agregarlo al usuario
                     Articulo articulo = new Articulo(nombreArticulo, gastoArticulo, "Lugar", "Fecha");
                     usuario.agregarArticulo(articulo);
                     usuario.setGasto(usuario.getGasto() + gastoArticulo);
-
+        
                     // Actualizar el archivo de usuarios con el nuevo gasto
                     GestorCSV.guardarUsuarios(usuarios, rutaArchivoUsuarios);
-
+        
                     // Añadir el artículo a la lista visual
                     listaArticulosModel.addElement(nombreArticulo + " - Q" + gastoArticulo);
                     actualizarTotales();
-
+        
+                    // Actualizar la gráfica
+                    graficasPanel.actualizarGrafica();
+        
                     nombreArticuloField.setText("");
                     gastoArticuloField.setText("");
                 } catch (NumberFormatException ex) {
@@ -216,6 +218,7 @@ public class MainGUI {
                 }
             }
         });
+        
 
         return formPanel;
     }
