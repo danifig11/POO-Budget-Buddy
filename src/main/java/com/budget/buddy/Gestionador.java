@@ -15,13 +15,15 @@ public class Gestionador {
         this.recomendacionesAhorro = recomendacionesAhorro;
         this.alertasGasto = alertasGasto;
     }
-
+    
     public String registrarUsuario(String nombre, String contra) {
         if (!validarContraseña(contra)) {
             return "Error: La contraseña debe tener al menos 8 caracteres y una letra mayúscula.";
         }
-
+    
         Usuario user = new Usuario(nombre, 0.0, contra);
+        
+        // Add the new user to the in-memory list and save to CSV
         usuarios.add(user);
         
         if (GestorCSV.guardarUsuarios(usuarios, rutaArchivo)) {
@@ -50,7 +52,7 @@ public class Gestionador {
             if (usuario.getNombre().equals(nombre)) {
                 usuario.setGasto(usuario.getGasto() + gasto);
                 usuario.setAhorro(usuario.getAhorro() + ahorro);
-                GestorCSV.guardarUsuarios(usuarios, rutaArchivo);
+                GestorCSV.guardarUsuarios(usuarios, rutaArchivo);  // Save only the current list
                 return "Gastos y ahorros registrados.";
             }
         }
