@@ -78,32 +78,32 @@ public class MainGUI {
 
     private Graficas graficasPanel;
 
-public void mostrarMenu() {
-    pane = new JTabbedPane();
-
-    // Pestaña 1: Gráfica
-    JPanel panel1 = new JPanel(new BorderLayout());
-    panel1.setBackground(new Color(45, 45, 48));
-    graficasPanel = new Graficas(usuario); // Instanciar Graficas con el usuario
-    panel1.add(graficasPanel, BorderLayout.CENTER);
-    pane.addTab("Gráfica", panel1);
-
-    // Pestaña 2: Formulario y lista de artículos
-    JPanel panel2 = new JPanel(new BorderLayout());
-    panel2.setBackground(new Color(45, 45, 48));
-
-    JPanel formPanel = crearPanelFormulario();
-    JPanel listaPanel = crearPanelLista();
-
-    JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, formPanel, listaPanel);
-    splitPane.setDividerLocation(300);
-    panel2.add(splitPane, BorderLayout.CENTER);
-
-    pane.addTab("Formulario y Gastos", panel2);
-    frame.setContentPane(pane);
-    frame.revalidate();
-    frame.repaint();
-}
+    public void mostrarMenu() {
+        pane = new JTabbedPane();
+    
+        // Pestaña 1: Gráfica
+        JPanel panel1 = new JPanel(new BorderLayout());
+        panel1.setBackground(new Color(45, 45, 48));
+        graficasPanel = new Graficas(usuario); // Instanciar Graficas con el usuario
+        panel1.add(graficasPanel, BorderLayout.CENTER);
+        pane.addTab("Gráfica", panel1);
+    
+        // Pestaña 2: Formulario y lista de artículos
+        JPanel panel2 = new JPanel(new BorderLayout());
+        panel2.setBackground(new Color(45, 45, 48));
+    
+        JPanel formPanel = crearPanelFormulario();
+        JPanel listaPanel = crearPanelLista();
+    
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, formPanel, listaPanel);
+        splitPane.setDividerLocation(300);
+        panel2.add(splitPane, BorderLayout.CENTER);
+    
+        pane.addTab("Formulario y Gastos", panel2);
+        frame.setContentPane(pane);
+        frame.revalidate();
+        frame.repaint();
+    }
 
 
     private JPanel crearPanelFormulario() {
