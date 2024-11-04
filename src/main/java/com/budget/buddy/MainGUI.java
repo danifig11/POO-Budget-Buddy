@@ -141,7 +141,7 @@ public class MainGUI {
         formPanel.add(gastoArticuloField, gbc);
 
         // Etiqueta para ingresos
-        JLabel ingresoLabel = new JLabel("Ingrese su ingreso mensual (Q):");
+        JLabel ingresoLabel = new JLabel("Ingrese su ingreso (Q):");
         ingresoLabel.setForeground(Color.WHITE);
         ingresoLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridy = 4;
