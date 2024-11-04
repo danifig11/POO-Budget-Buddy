@@ -100,6 +100,11 @@ public class MainGUI {
         panel2.add(splitPane, BorderLayout.CENTER);
     
         pane.addTab("Formulario y Gastos", panel2);
+
+        // Pestaña 3: Cuestionario de Finanzas
+        CuestionarioFinanzasGUI cuestionarioPanel = new CuestionarioFinanzasGUI();
+        pane.addTab("Cuestionario de Finanzas", cuestionarioPanel);
+        
         frame.setContentPane(pane);
         frame.revalidate();
         frame.repaint();
