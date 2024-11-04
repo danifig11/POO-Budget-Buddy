@@ -59,6 +59,7 @@ public class CuestionarioFinanzasGUI extends JPanel {
             mostrarResultado();
         }
     }
+    
 
     private void verificarRespuesta() {
         int respuestaCorrecta = Integer.parseInt(cuestionario.preguntas[preguntaActual][4]);
