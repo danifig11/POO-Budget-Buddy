@@ -290,6 +290,7 @@ public class MainGUI {
 
         return listaPanel;
     }
+    @SuppressWarnings("unused")
     private ChartPanel crearPanelGrafica() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
