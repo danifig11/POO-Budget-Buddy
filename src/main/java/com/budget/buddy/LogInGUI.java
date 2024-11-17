@@ -1,8 +1,11 @@
 package com.budget.buddy;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -26,77 +29,118 @@ public class LogInGUI extends JPanel {
 
     private void LogInPane() {
 
-        // Crear panel para el login con GridBagLayout para un diseño flexible
-        JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(new Color(60, 63, 65)); // Fondo oscuro
+        // Crear panel de fondo con un degradado sutil
+        JPanel backgroundPanel = new JPanel(new GridBagLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                GradientPaint gp = new GradientPaint(0, 0, new Color(245, 245, 245), getWidth(), getHeight(), new Color(225, 225, 235));
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+
+        // Panel para el contenido central
+        JPanel loginCard = new JPanel(new GridBagLayout());
+        loginCard.setBackground(Color.WHITE);
+        loginCard.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        loginCard.setPreferredSize(new Dimension(400, 300));
+        loginCard.setLayout(new GridBagLayout());
+
+        // Sombra para dar sensación de flotación
+        loginCard.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200), 1, true),
+                BorderFactory.createEmptyBorder(15, 15, 15, 15)
+        ));
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Espaciado
+        gbc.insets = new Insets(10, 10, 10, 10);
 
         // Etiqueta del título
         JLabel titleLabel = new JLabel("Inicio de Sesión");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 22));
-        titleLabel.setForeground(Color.WHITE); // Color del texto
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        titleLabel.setForeground(new Color(50, 50, 50));
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.gridwidth = 2; // Usar 2 columnas para centrar
-        panel.add(titleLabel, gbc);
+        gbc.gridwidth = 2;
+        loginCard.add(titleLabel, gbc);
 
         // Etiqueta de usuario
-        JLabel userLabel = new JLabel("Usuario: ");
-        userLabel.setForeground(Color.WHITE); // Color del texto
-        gbc.gridwidth = 1; // Restablecer el ancho de la columna
+        JLabel userLabel = new JLabel("Usuario:");
+        userLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        userLabel.setForeground(new Color(80, 80, 80));
+        gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy = 1;
-        panel.add(userLabel, gbc);
+        gbc.anchor = GridBagConstraints.WEST;
+        loginCard.add(userLabel, gbc);
 
         // Campo de texto para usuario
         userText = new JTextField(15);
+        userText.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        userText.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1, true));
+        userText.setPreferredSize(new Dimension(200, 30));
         gbc.gridx = 1;
         gbc.gridy = 1;
-        panel.add(userText, gbc);
+        loginCard.add(userText, gbc);
 
         // Etiqueta de contraseña
-        JLabel passwordLabel = new JLabel("Contraseña: ");
-        passwordLabel.setForeground(Color.WHITE); // Color del texto
+        JLabel passwordLabel = new JLabel("Contraseña:");
+        passwordLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        passwordLabel.setForeground(new Color(80, 80, 80));
         gbc.gridx = 0;
         gbc.gridy = 2;
-        panel.add(passwordLabel, gbc);
+        gbc.anchor = GridBagConstraints.WEST;
+        loginCard.add(passwordLabel, gbc);
 
         // Campo de contraseña
         passwordText = new JPasswordField(15);
+        passwordText.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        passwordText.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1, true));
+        passwordText.setPreferredSize(new Dimension(200, 30));
         gbc.gridx = 1;
         gbc.gridy = 2;
-        panel.add(passwordText, gbc);
+        loginCard.add(passwordText, gbc);
 
         // Botón de login
         loginButton = new JButton("Login");
-        loginButton.setBackground(new Color(75, 110, 175)); // Color de fondo del botón
-        loginButton.setForeground(Color.WHITE); // Color del texto del botón
-        loginButton.setFocusPainted(false); // Quitar el borde de selección
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridwidth = 2; // Hacer que el botón ocupe 2 columnas
-        panel.add(loginButton, gbc);
-
-        // Botón para creación de usuario y contraseña
-        newUserButton = new JButton("¿No tiene usuario y contraseña?");
-        newUserButton.setBackground(new Color(75, 110, 175)); // Color de fondo del botón
-        newUserButton.setForeground(Color.WHITE); // Color del texto del botón
-        newUserButton.setFocusPainted(false); // Quitar el borde de selección
-        newUserButton.setOpaque(false); // Quitar la opacidad del botón
-        newUserButton.setContentAreaFilled(false); // Quitar el color que rodea al botón
-        newUserButton.setBorderPainted(false); // Quitar el borde del botón
+        loginButton.setBackground(new Color(100, 149, 237));
+        loginButton.setForeground(Color.WHITE);
+        loginButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        loginButton.setFocusPainted(false);
+        loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        loginButton.setPreferredSize(new Dimension(200, 35));
+        addHoverEffect(loginButton, new Color(80, 130, 220), new Color(100, 149, 237));
         gbc.gridx = 0;
         gbc.gridy = 3;
-        gbc.gridwidth = 2; // Hacer que el botón ocupe 2 columnas
-        panel.add(newUserButton, gbc);
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        loginCard.add(loginButton, gbc);
 
-        // Añadir el panel de login a este JPanel
+        // Botón para creación de usuario
+        newUserButton = new JButton("Crear usuario");
+        newUserButton.setBackground(new Color(230, 230, 230));
+        newUserButton.setForeground(new Color(100, 149, 237));
+        newUserButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        newUserButton.setFocusPainted(false);
+        newUserButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        newUserButton.setBorder(BorderFactory.createLineBorder(new Color(100, 149, 237)));
+        newUserButton.setPreferredSize(new Dimension(200, 35));
+        addHoverEffect(newUserButton, new Color(210, 210, 210), new Color(230, 230, 230));
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        loginCard.add(newUserButton, gbc);
+
+        // Añadir el panel central al fondo
+        backgroundPanel.add(loginCard);
+
+        // Añadir el panel de fondo al JPanel principal
         this.setLayout(new BorderLayout());
-        this.add(panel, BorderLayout.CENTER);
+        this.add(backgroundPanel, BorderLayout.CENTER);
 
-        // botón de login
+        // Acción del botón de login
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -108,7 +152,7 @@ public class LogInGUI extends JPanel {
         newUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                main.showNewUserPanel(); // Cambiar al panel de crear usuario
+                main.showNewUserPanel();
             }
         });
     }
@@ -119,18 +163,32 @@ public class LogInGUI extends JPanel {
 
         // Validar usuario y contraseña
         boolean usuarioValido = false;
-        for (Usuario usuario : usuarios) { // Verificar usuario
+        for (Usuario usuario : usuarios) {
             if (usuario.getNombre().equals(nombre) && usuario.getContraseña().equals(contra)) {
                 logueado = true;
                 JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso.");
                 main.mostrarMenu();
                 usuarioValido = true;
-                break; // Romper el ciclo si se encuentra el usuario
+                break;
             }
         }
 
         if (!usuarioValido) {
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void addHoverEffect(JButton button, Color hoverColor, Color normalColor) {
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(hoverColor);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(normalColor);
+            }
+        });
     }
 }
