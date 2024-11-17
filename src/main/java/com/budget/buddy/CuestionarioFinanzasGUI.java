@@ -19,31 +19,59 @@ public class CuestionarioFinanzasGUI extends JPanel {
         
         setLayout(new BorderLayout());
 
+        // Panel de fondo con degradado
+        JPanel backgroundPanel = new JPanel(new BorderLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                GradientPaint gp = new GradientPaint(0, 0, new Color(245, 245, 245), getWidth(), getHeight(), new Color(225, 225, 235));
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        backgroundPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        add(backgroundPanel);
+
         lblPregunta = new JLabel();
         lblPregunta.setHorizontalAlignment(SwingConstants.CENTER);
-        lblPregunta.setFont(new Font("Arial", Font.BOLD, 16));
-        add(lblPregunta, BorderLayout.NORTH);
+        lblPregunta.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        lblPregunta.setForeground(new Color(50, 50, 50));
+        backgroundPanel.add(lblPregunta, BorderLayout.NORTH);
 
-        JPanel panelOpciones = new JPanel();
-        panelOpciones.setLayout(new GridLayout(3, 1));
+        JPanel panelOpciones = new JPanel(new GridLayout(3, 1, 10, 10));
+        panelOpciones.setOpaque(false);
         opciones = new JRadioButton[3];
         grupoOpciones = new ButtonGroup();
 
         for (int i = 0; i < opciones.length; i++) {
             opciones[i] = new JRadioButton();
+            opciones[i].setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            opciones[i].setForeground(new Color(50, 50, 50));
+            opciones[i].setOpaque(false);
             grupoOpciones.add(opciones[i]);
             panelOpciones.add(opciones[i]);
         }
-        add(panelOpciones, BorderLayout.CENTER);
+        backgroundPanel.add(panelOpciones, BorderLayout.CENTER);
 
         btnSiguiente = new JButton("Siguiente");
+        btnSiguiente.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btnSiguiente.setForeground(Color.WHITE);
+        btnSiguiente.setBackground(new Color(100, 149, 237));
+        btnSiguiente.setFocusPainted(false);
+        btnSiguiente.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnSiguiente.setPreferredSize(new Dimension(200, 35));
+        addHoverEffect(btnSiguiente, new Color(80, 130, 220), new Color(100, 149, 237));
         btnSiguiente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 verificarRespuesta();
             }
         });
-        add(btnSiguiente, BorderLayout.SOUTH);
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setOpaque(false);
+        buttonPanel.add(btnSiguiente);
+        backgroundPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         mostrarPregunta();
     }
@@ -88,5 +116,18 @@ public class CuestionarioFinanzasGUI extends JPanel {
         }
         JOptionPane.showMessageDialog(this, mensaje);
     }
-}
 
+    private void addHoverEffect(JButton button, Color hoverColor, Color normalColor) {
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(hoverColor);
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(normalColor);
+            }
+        });
+    }
+}
