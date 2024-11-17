@@ -22,6 +22,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+// import java.time.LocalDate;
 
 public class MainGUI {
     private JTabbedPane pane;
@@ -39,7 +40,9 @@ public class MainGUI {
     private DefaultListModel<String> listaArticulosModel;
     private JLabel totalGastosLabel;
     private JLabel totalIngresosLabel;
+    private JLabel balance;
     private String rutaArchivoUsuarios = "usuarios.csv";
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -83,14 +86,14 @@ public class MainGUI {
     
         // Pestaña 1: Gráfica
         JPanel panel1 = new JPanel(new BorderLayout());
-        panel1.setBackground(new Color(45, 45, 48));
+        panel1.setBackground(new Color(245, 245, 245));
         graficasPanel = new Graficas(usuario); // Instanciar Graficas con el usuario
         panel1.add(graficasPanel, BorderLayout.CENTER);
         pane.addTab("Gráfica", panel1);
     
         // Pestaña 2: Formulario y lista de artículos
         JPanel panel2 = new JPanel(new BorderLayout());
-        panel2.setBackground(new Color(45, 45, 48));
+        panel2.setBackground(new Color(245, 245, 245));
     
         JPanel formPanel = crearPanelFormulario();
         JPanel listaPanel = crearPanelLista();
@@ -112,66 +115,84 @@ public class MainGUI {
 
 
     private JPanel crearPanelFormulario() {
-        JPanel formPanel = new JPanel(new GridBagLayout());
-        formPanel.setBackground(new Color(60, 63, 65));
+        JPanel formPanel = new JPanel(new GridBagLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                GradientPaint gp = new GradientPaint(0, 0, new Color(245, 245, 245), getWidth(), getHeight(), new Color(225, 225, 235));
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Etiqueta para nombre del artículo
         JLabel nombreArticuloLabel = new JLabel("Nombre del artículo:");
-        nombreArticuloLabel.setForeground(Color.WHITE);
-        nombreArticuloLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        nombreArticuloLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        nombreArticuloLabel.setForeground(new Color(50, 50, 50));
         gbc.gridx = 0;
         gbc.gridy = 0;
         formPanel.add(nombreArticuloLabel, gbc);
 
-        // Campo de texto para el nombre del artículo
-        nombreArticuloField = new JTextField(20);
-        gbc.gridy = 1;
+        nombreArticuloField = new JTextField(15);
+        nombreArticuloField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        nombreArticuloField.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
+        gbc.gridx = 1;
+        gbc.gridy = 0;
         formPanel.add(nombreArticuloField, gbc);
 
-        // Etiqueta para gasto del artículo
         JLabel gastoArticuloLabel = new JLabel("Monto del gasto (Q):");
-        gastoArticuloLabel.setForeground(Color.WHITE);
-        gastoArticuloLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        gbc.gridy = 2;
+        gastoArticuloLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        gastoArticuloLabel.setForeground(new Color(50, 50, 50));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         formPanel.add(gastoArticuloLabel, gbc);
 
-        // Campo de texto para el gasto del artículo
-        gastoArticuloField = new JTextField(20);
-        gbc.gridy = 3;
+        gastoArticuloField = new JTextField(15);
+        gastoArticuloField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        gastoArticuloField.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         formPanel.add(gastoArticuloField, gbc);
 
-        // Etiqueta para ingresos
-        JLabel ingresoLabel = new JLabel("Ingrese su ingreso (Q):");
-        ingresoLabel.setForeground(Color.WHITE);
-        ingresoLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        gbc.gridy = 4;
-        formPanel.add(ingresoLabel, gbc);
-
-        // Campo de texto para ingreso mensual
-        ingresoField = new JTextField(20);
-        gbc.gridy = 5;
-        formPanel.add(ingresoField, gbc);
-
-        // Botón para agregar ingreso mensual
-        JButton ingresoButton = new JButton("Agregar Ingreso Mensual");
-        ingresoButton.setBackground(new Color(75, 110, 175));
-        ingresoButton.setForeground(Color.WHITE);
-        ingresoButton.setFont(new Font("Arial", Font.BOLD, 14));
-        gbc.gridy = 6;
-        formPanel.add(ingresoButton, gbc);
-
-        // Botón para agregar gasto como artículo
         JButton agregarGastoButton = new JButton("Agregar Gasto");
-        agregarGastoButton.setBackground(new Color(75, 110, 175));
+        agregarGastoButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
         agregarGastoButton.setForeground(Color.WHITE);
-        agregarGastoButton.setFont(new Font("Arial", Font.BOLD, 14));
-        gbc.gridy = 7;
+        agregarGastoButton.setBackground(new Color(100, 149, 237));
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
         formPanel.add(agregarGastoButton, gbc);
 
+        JLabel ingresoLabel = new JLabel("Ingrese su ingreso (Q):");
+        ingresoLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        ingresoLabel.setForeground(new Color(50, 50, 50));
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        formPanel.add(ingresoLabel, gbc);
+
+        ingresoField = new JTextField(15);
+        ingresoField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        ingresoField.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        formPanel.add(ingresoField, gbc);
+
+        JButton ingresoButton = new JButton("Agregar Ingreso Mensual");
+        ingresoButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        ingresoButton.setForeground(Color.WHITE);
+        ingresoButton.setBackground(new Color(100, 149, 237));
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        formPanel.add(ingresoButton, gbc);
+
+        
         // Acción para botón de ingreso
         ingresoButton.addActionListener(new ActionListener() {
             @Override
@@ -202,7 +223,7 @@ public class MainGUI {
                     double gastoArticulo = Double.parseDouble(gastoArticuloField.getText());
         
                     // Crear el artículo y agregarlo al usuario
-                    Articulo articulo = new Articulo(nombreArticulo, gastoArticulo, "Lugar", "Fecha");
+                    Articulo articulo = new Articulo(nombreArticulo, gastoArticulo, "Lugar");
                     usuario.agregarArticulo(articulo);
                     usuario.setGasto(usuario.getGasto() + gastoArticulo);
         
@@ -223,46 +244,52 @@ public class MainGUI {
                 }
             }
         });
-        
 
         return formPanel;
-    }
-
-    private JPanel crearPanelLista() {
-        JPanel listaPanel = new JPanel(new BorderLayout());
-        listaPanel.setBackground(new Color(60, 63, 65));
-
-        listaArticulosModel = new DefaultListModel<>();
-        JList<String> listaArticulos = new JList<>(listaArticulosModel);
-        listaArticulos.setBackground(new Color(45, 45, 48));
-        listaArticulos.setForeground(Color.WHITE);
-
-        JScrollPane scrollPane = new JScrollPane(listaArticulos);
-        listaPanel.add(scrollPane, BorderLayout.CENTER);
-
-        JPanel totalesPanel = new JPanel(new GridLayout(2, 1));
-        totalesPanel.setBackground(new Color(60, 63, 65));
-
-        totalGastosLabel = new JLabel("Total Gastos: Q0.0");
-        totalGastosLabel.setForeground(Color.WHITE);
-        totalGastosLabel.setFont(new Font("Arial", Font.BOLD, 14));
-
-        totalIngresosLabel = new JLabel("Total Ingresos: Q0.0");
-        totalIngresosLabel.setForeground(Color.WHITE);
-        totalIngresosLabel.setFont(new Font("Arial", Font.BOLD, 14));
-
-        totalesPanel.add(totalGastosLabel);
-        totalesPanel.add(totalIngresosLabel);
-        listaPanel.add(totalesPanel, BorderLayout.SOUTH);
-
-        return listaPanel;
     }
 
     private void actualizarTotales() {
         totalGastosLabel.setText("Total Gastos: Q" + usuario.getGasto());
         totalIngresosLabel.setText("Total Ingresos: Q" + usuario.getAhorro());
+        double balanceCalculado = usuario.getAhorro() - usuario.getGasto(); 
+        balance.setText("Total balance: Q" + balanceCalculado);
     }
 
+    private JPanel crearPanelLista() {
+        JPanel listaPanel = new JPanel(new BorderLayout());
+        listaPanel.setBackground(new Color(245, 245, 245));
+
+        listaArticulosModel = new DefaultListModel<>();
+        JList<String> listaArticulos = new JList<>(listaArticulosModel);
+        listaArticulos.setBackground(new Color(245, 245, 245));
+        listaArticulos.setForeground(new Color(50, 50, 50));
+        listaArticulos.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+
+        JScrollPane scrollPane = new JScrollPane(listaArticulos);
+        listaPanel.add(scrollPane, BorderLayout.CENTER);
+
+        JPanel totalesPanel = new JPanel(new GridLayout(3, 1));
+        totalesPanel.setBackground(new Color(245, 245, 245));
+
+        totalGastosLabel = new JLabel("Total Gastos: Q0.0");
+        totalGastosLabel.setForeground(new Color(50, 50, 50));
+        totalGastosLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+
+        totalIngresosLabel = new JLabel("Total Ingresos: Q0.0");
+        totalIngresosLabel.setForeground(new Color(50, 50, 50));
+        totalIngresosLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+
+        balance = new JLabel("Total balance: Q0.0");
+        balance.setForeground(new Color(50, 50, 50));
+        balance.setFont(new Font("Segoe UI", Font.BOLD, 14));
+
+        totalesPanel.add(totalGastosLabel);
+        totalesPanel.add(totalIngresosLabel);
+        totalesPanel.add(balance);
+        listaPanel.add(totalesPanel, BorderLayout.SOUTH);
+
+        return listaPanel;
+    }
     private ChartPanel crearPanelGrafica() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
