@@ -324,4 +324,28 @@ public class MainGUI {
 
         return listaPanel;
     }
+<<<<<<< HEAD
+=======
+    @SuppressWarnings("unused")
+    
+    private ChartPanel crearPanelGrafica() {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        if (gastosMensuales > 0 && presupuestoMensual > 0) {
+            dataset.addValue(presupuestoMensual, "Ingresos", "Mes Actual");
+            dataset.addValue(gastosMensuales, "Egresos", "Mes Actual");
+        }
+
+        JFreeChart barChart = ChartFactory.createBarChart(
+            "Ingresos vs Egresos",  
+            "Mes",                  
+            "Monto (Q)",            
+            dataset,                
+            PlotOrientation.VERTICAL, 
+            true, true, false        
+        );
+
+        return new ChartPanel(barChart);
+        }
+>>>>>>> 2683aab (Para luego hacer pull)
 }

@@ -25,18 +25,31 @@ public class Graficas extends JPanel {
     private JFreeChart crearGraficaIngresosEgresos() {
         actualizarDataset();
         return ChartFactory.createBarChart(
-            "Ingresos y Egresos", "Artículo", "Monto", 
-            dataset, PlotOrientation.VERTICAL, true, true, false
+            "Ingresos, Egresos y Balance", // Título actualizado
+            "Categoría",                  // Eje X
+            "Monto (Q)",                  // Eje Y
+            dataset,                      // Datos
+            PlotOrientation.VERTICAL, 
+            true, true, false
         );
     }
+    
 
     public void actualizarDataset() {
         dataset.clear();
+    
+        // Agregar los gastos (ya presentes en tu lista de artículos)
         ArrayList<Articulo> articulos = usuario.getArticulos();
         for (Articulo articulo : articulos) {
-            dataset.addValue(articulo.getPrecio(), "Precio", articulo.getNombre());
+            dataset.addValue(articulo.getPrecio(), "Gastos", articulo.getNombre());
         }
+    
+        // Agregar los ingresos totales
         dataset.addValue(usuario.getAhorro(), "Ingresos", "Ingreso Mensual");
+    
+        // Calcular y agregar el balance
+        double balance = usuario.getAhorro() - usuario.getGasto();
+        dataset.addValue(balance, "Balance", "Total balance");
     }
 
     public void actualizarGrafica() {
