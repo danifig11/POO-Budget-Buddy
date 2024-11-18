@@ -1,11 +1,10 @@
-
 /*UNIVERSIDAD DE VALLE DE GUATEMALA
  * CAMPUS CENTRAL
  * PROGRAMACION ORIENTADA A OBJETOS
  * ESTEBAN EMILIO CUMATZ QUINA, 24449
  * ADRIAN PENAGOS, 24914
  * DENIL PARADA, 24761
- * fIGUERA REYES, 24073
+ * FIGUERA REYES, 24073
  * JOEL JOSUE NERIO ALONZO, 24253
  * PROYECTO PARTE 3
  */
@@ -89,6 +88,7 @@ public class MainGUI {
         panel1.setBackground(new Color(245, 245, 245));
         graficasPanel = new Graficas(usuario); // Instanciar Graficas con el usuario
         panel1.add(graficasPanel, BorderLayout.CENTER);
+        agregarBotonCerrarSesion(panel1); // Agregar botón "Cerrar Sesión"
         pane.addTab("Gráfica", panel1);
     
         // Pestaña 2: Formulario y lista de artículos
@@ -101,11 +101,12 @@ public class MainGUI {
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, formPanel, listaPanel);
         splitPane.setDividerLocation(300);
         panel2.add(splitPane, BorderLayout.CENTER);
-    
+        agregarBotonCerrarSesion(panel2); // Agregar botón "Cerrar Sesión"
         pane.addTab("Formulario y Gastos", panel2);
 
         // Pestaña 3: Cuestionario de Finanzas
         CuestionarioFinanzasGUI cuestionarioPanel = new CuestionarioFinanzasGUI();
+        agregarBotonCerrarSesion(cuestionarioPanel); // Agregar botón "Cerrar Sesión"
         pane.addTab("Cuestionario de Finanzas", cuestionarioPanel);
         
         // Listener para reiniciar el cuestionario cuando se selecciona la pestaña
@@ -123,6 +124,37 @@ public class MainGUI {
         frame.repaint();
     }
 
+    private void agregarBotonCerrarSesion(JPanel panel) {
+        JButton cerrarSesionButton = new JButton("Cerrar Sesión");
+        cerrarSesionButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        cerrarSesionButton.setForeground(Color.WHITE);
+        cerrarSesionButton.setBackground(new Color(255, 69, 58));
+        cerrarSesionButton.setFocusPainted(false);
+        cerrarSesionButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        cerrarSesionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int respuesta = JOptionPane.showConfirmDialog(
+                        frame,
+                        "¿Está seguro de que desea cerrar sesión?",
+                        "Confirmar Cierre de Sesión",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE
+                );
+
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    showLogIn();
+                }
+            }
+        });
+
+        JPanel botonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        botonPanel.add(cerrarSesionButton);
+        botonPanel.setBackground(panel.getBackground());
+
+        panel.add(botonPanel, BorderLayout.SOUTH);
+    }
 
     private JPanel crearPanelFormulario() {
         JPanel formPanel = new JPanel(new GridBagLayout()) {
@@ -202,8 +234,6 @@ public class MainGUI {
         gbc.gridwidth = 2;
         formPanel.add(ingresoButton, gbc);
 
-        
-        // Acción para botón de ingreso
         ingresoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -212,9 +242,8 @@ public class MainGUI {
                     usuario.setAhorro(usuario.getAhorro() + ingreso); // Actualizar ahorro del usuario
                     presupuestoMensual = ingreso;
 
-                    // Guardar los cambios de ingreso en el archivo CSV
                     GestorCSV.guardarUsuarios(usuarios, rutaArchivoUsuarios);
-                    
+
                     actualizarTotales();
                     ingresoField.setText("");
                     JOptionPane.showMessageDialog(formPanel, "Ingreso mensual agregado exitosamente.");
@@ -224,29 +253,24 @@ public class MainGUI {
             }
         });
 
-        // Acción para botón de agregar gasto
         agregarGastoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     String nombreArticulo = nombreArticuloField.getText();
                     double gastoArticulo = Double.parseDouble(gastoArticuloField.getText());
-        
-                    // Crear el artículo y agregarlo al usuario
+
                     Articulo articulo = new Articulo(nombreArticulo, gastoArticulo, "Lugar");
                     usuario.agregarArticulo(articulo);
                     usuario.setGasto(usuario.getGasto() + gastoArticulo);
-        
-                    // Actualizar el archivo de usuarios con el nuevo gasto
+
                     GestorCSV.guardarUsuarios(usuarios, rutaArchivoUsuarios);
-        
-                    // Añadir el artículo a la lista visual
+
                     listaArticulosModel.addElement(nombreArticulo + " - Q" + gastoArticulo);
                     actualizarTotales();
-        
-                    // Actualizar la gráfica
+
                     graficasPanel.actualizarGrafica();
-        
+
                     nombreArticuloField.setText("");
                     gastoArticuloField.setText("");
                 } catch (NumberFormatException ex) {
@@ -261,7 +285,7 @@ public class MainGUI {
     private void actualizarTotales() {
         totalGastosLabel.setText("Total Gastos: Q" + usuario.getGasto());
         totalIngresosLabel.setText("Total Ingresos: Q" + usuario.getAhorro());
-        double balanceCalculado = usuario.getAhorro() - usuario.getGasto(); 
+        double balanceCalculado = usuario.getAhorro() - usuario.getGasto();
         balance.setText("Total balance: Q" + balanceCalculado);
     }
 
@@ -300,24 +324,4 @@ public class MainGUI {
 
         return listaPanel;
     }
-    @SuppressWarnings("unused")
-    private ChartPanel crearPanelGrafica() {
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        if (gastosMensuales > 0 && presupuestoMensual > 0) {
-            dataset.addValue(presupuestoMensual, "Ingresos", "Mes Actual");
-            dataset.addValue(gastosMensuales, "Egresos", "Mes Actual");
-        }
-
-        JFreeChart barChart = ChartFactory.createBarChart(
-            "Ingresos vs Egresos",  
-            "Mes",                  
-            "Monto (Q)",            
-            dataset,                
-            PlotOrientation.VERTICAL, 
-            true, true, false        
-        );
-
-        return new ChartPanel(barChart);
-        }
 }
