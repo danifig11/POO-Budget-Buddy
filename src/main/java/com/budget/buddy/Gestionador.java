@@ -95,4 +95,22 @@ public class Gestionador {
         GestorCSV.guardarUsuarios(usuarios, rutaArchivo);
         return "Datos exportados correctamente.";
     }
+
+    public String registrarUsuarioConId(int id, String nombre, String contra) {
+        if (!validarContraseña(contra)) {
+            return "Error: La contraseña debe tener al menos 8 caracteres y una letra mayúscula.";
+        }
+    
+        Usuario user = new Usuario(nombre, 0.0, contra);
+        user.setId(id); // Asignar el ID único al usuario
+    
+        // Agregar el nuevo usuario a la lista en memoria y guardar en el CSV
+        usuarios.add(user);
+    
+        if (GestorCSV.guardarUsuarios(usuarios, rutaArchivo)) {
+            return "Usuario creado exitosamente.";
+        } else {
+            return "Error: No se pudo crear el usuario.";
+        }
+    }
 }

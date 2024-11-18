@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class NewUserGUI extends JPanel {
     private JTextField userText;
@@ -133,7 +134,9 @@ public class NewUserGUI extends JPanel {
                 String nombre = userText.getText();
                 String contra = String.valueOf(passwordText.getPassword());
 
-                String resultado = gestionador.registrarUsuario(nombre, contra);
+                int id = generarIdUnico();
+
+                String resultado = gestionador.registrarUsuarioConId(id, nombre, contra);
 
                 if (resultado.equals("Usuario creado exitosamente.")) {
                     JOptionPane.showMessageDialog(NewUserGUI.this, resultado);
@@ -151,6 +154,27 @@ public class NewUserGUI extends JPanel {
                 main.showLogIn();
             }
         });
+    }
+
+    // Método para generar un ID único
+    private int generarIdUnico() {
+        Random random = new Random();
+        int id;
+        do {
+            id = random.nextInt(10000); // Genera un número entre 0 y 9999
+        } while (!esIdUnico(id));
+        return id;
+    }
+
+    // Método para verificar si el ID ya existe
+    private boolean esIdUnico(int id) {
+        ArrayList<Usuario> usuarios = GestorCSV.cargarUsuarios("usuarios.csv");
+        for (Usuario usuario : usuarios) {
+            if (usuario.getId() == id) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // Método para agregar efecto hover
