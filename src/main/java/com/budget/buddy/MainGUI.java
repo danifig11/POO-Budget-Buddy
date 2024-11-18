@@ -59,9 +59,9 @@ public class MainGUI {
         // Cargar usuarios desde el archivo
         usuarios = GestorCSV.cargarUsuarios(rutaArchivoUsuarios);
         
-        // Seleccionar un usuario de ejemplo (puedes cambiar esta lógica para seleccionar el usuario adecuado)
+        
         if (!usuarios.isEmpty()) {
-            usuario = usuarios.get(0); // Usuario de ejemplo
+            usuario = usuarios.get(0); 
         }
     }
 
