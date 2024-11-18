@@ -64,7 +64,7 @@ public class NewUserGUI extends JPanel {
         userLabel.setForeground(new Color(80, 80, 80));
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.gridwidth = 1;
+        gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.WEST;
         userCard.add(userLabel, gbc);
 
@@ -72,45 +72,38 @@ public class NewUserGUI extends JPanel {
         userText = new JTextField(15);
         userText.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         userText.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridy = 2; // Campo debajo de la etiqueta
+        gbc.gridwidth = 2;
         userCard.add(userText, gbc);
 
         // Etiqueta de contraseña
         JLabel passwordLabel = new JLabel("Contraseña:");
         passwordLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         passwordLabel.setForeground(new Color(80, 80, 80));
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridy = 3; // Etiqueta en nueva línea
+        gbc.gridwidth = 2;
         userCard.add(passwordLabel, gbc);
 
         // Campo de texto para contraseña
         passwordText = new JPasswordField(15);
         passwordText.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         passwordText.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridy = 4; // Campo debajo de la etiqueta
         userCard.add(passwordText, gbc);
 
         // Etiqueta de confirmación de contraseña
         JLabel confirmPasswordLabel = new JLabel("Confirmar Contraseña:");
         confirmPasswordLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         confirmPasswordLabel.setForeground(new Color(80, 80, 80));
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridy = 5; // Etiqueta en nueva línea
+        gbc.gridwidth = 2;
         userCard.add(confirmPasswordLabel, gbc);
 
         // Campo de texto para confirmación de contraseña
         confirmPasswordText = new JPasswordField(15);
         confirmPasswordText.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         confirmPasswordText.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridy = 6; // Campo debajo de la etiqueta
         userCard.add(confirmPasswordText, gbc);
 
         // Botón "Crear Usuario"
@@ -121,8 +114,7 @@ public class NewUserGUI extends JPanel {
         createUserButton.setFocusPainted(false);
         createUserButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         addHoverEffect(createUserButton, new Color(80, 130, 220), new Color(100, 149, 237));
-        gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 7;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         userCard.add(createUserButton, gbc);
@@ -135,7 +127,7 @@ public class NewUserGUI extends JPanel {
         backButton.setFocusPainted(false);
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         addHoverEffect(backButton, new Color(210, 210, 210), new Color(230, 230, 230));
-        gbc.gridy = 5;
+        gbc.gridy = 8;
         userCard.add(backButton, gbc);
 
         // Añadir tarjeta flotante al fondo
