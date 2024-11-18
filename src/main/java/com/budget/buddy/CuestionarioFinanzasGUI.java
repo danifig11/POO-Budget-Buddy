@@ -13,6 +13,9 @@ public class CuestionarioFinanzasGUI extends JPanel {
     private JRadioButton[] opciones;
     private ButtonGroup grupoOpciones;
     private JButton btnSiguiente;
+    private JButton btnReiniciar;
+
+    
 
     public CuestionarioFinanzasGUI() {
         cuestionario = new CuestionarioFinanzas();
@@ -68,9 +71,27 @@ public class CuestionarioFinanzasGUI extends JPanel {
                 verificarRespuesta();
             }
         });
+
+        btnReiniciar = new JButton("Reiniciar Cuestionario");
+        btnReiniciar.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btnReiniciar.setForeground(Color.WHITE);
+        btnReiniciar.setBackground(new Color(220, 20, 60));
+        btnReiniciar.setFocusPainted(false);
+        btnReiniciar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnReiniciar.setPreferredSize(new Dimension(200, 35));
+        addHoverEffect(btnReiniciar, new Color(200, 0, 50), new Color(220, 20, 60));
+        btnReiniciar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reiniciarCuestionario();
+            }
+        });
+        
+        
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.setOpaque(false);
         buttonPanel.add(btnSiguiente);
+        buttonPanel.add(btnReiniciar);
         backgroundPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         mostrarPregunta();
@@ -115,6 +136,11 @@ public class CuestionarioFinanzasGUI extends JPanel {
             mensaje += "Sigue aprendiendo sobre finanzas para mejorar tus habilidades.";
         }
         JOptionPane.showMessageDialog(this, mensaje);
+    }
+    public void reiniciarCuestionario() {
+        cuestionario = new CuestionarioFinanzas();
+        preguntaActual = 0;
+        mostrarPregunta();
     }
 
     private void addHoverEffect(JButton button, Color hoverColor, Color normalColor) {

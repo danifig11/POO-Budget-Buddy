@@ -108,6 +108,16 @@ public class MainGUI {
         CuestionarioFinanzasGUI cuestionarioPanel = new CuestionarioFinanzasGUI();
         pane.addTab("Cuestionario de Finanzas", cuestionarioPanel);
         
+        // Listener para reiniciar el cuestionario cuando se selecciona la pestaña
+        pane.addChangeListener(e -> {
+            int selectedIndex = pane.getSelectedIndex();
+            String tabTitle = pane.getTitleAt(selectedIndex);
+            if ("Cuestionario de Finanzas".equals(tabTitle)) {
+                // Reiniciar el cuestionario
+                cuestionarioPanel.reiniciarCuestionario();
+            }
+        });
+        
         frame.setContentPane(pane);
         frame.revalidate();
         frame.repaint();
