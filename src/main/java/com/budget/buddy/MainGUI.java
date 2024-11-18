@@ -324,8 +324,7 @@ public class MainGUI {
 
         return listaPanel;
     }
-<<<<<<< HEAD
-=======
+
     @SuppressWarnings("unused")
     
     private ChartPanel crearPanelGrafica() {
@@ -347,5 +346,4 @@ public class MainGUI {
 
         return new ChartPanel(barChart);
         }
->>>>>>> 2683aab (Para luego hacer pull)
 }
